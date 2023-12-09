@@ -5,11 +5,11 @@ from flask import Flask, request
 from config import Config
 from result import Result
 import utils
-from toaster import toaster
+from notifier import notifier
 
 CONFIG_FILE_NAME = 'config.ini'
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-print("SCRIPT_DIR" + SCRIPT_DIR)
+print("SCRIPT_DIR: " + SCRIPT_DIR)
 config = Config(os.path.join(SCRIPT_DIR, 'config', CONFIG_FILE_NAME))
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def check_api_key():
     version = request.headers.get("ShortcutVersion")
     if version != config.version:
         msg = f'版本不匹配\n\nWindows版本为：{config.version}\n快捷指令版本为：{version}'
-        return Result.error(msg=msg, code=401)
+        return Result.error(msg=msg, code=400)
 
 
 # 手机端发送文件
@@ -34,7 +34,7 @@ def send_file():
     filename = request.form['filename']
     new_filename = utils.avoid_duplicate_filename(config.save_path, filename)
     file.save(os.path.join(config.save_path, new_filename))
-    toaster("收到文件: " + filename)
+    notifier("收到文件: " + filename + f'\n保存在: {config.save_path}')
     return Result.success(msg="发送成功")
 
 
@@ -52,6 +52,7 @@ def receive_file_list():
 def receive_file():
     path = request.form.get('path')
     file_name = os.path.basename(path)
+    notifier(f'发送：{file_name}')
     with open(path, 'rb') as f:
         file_content = f.read()
     return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=file_name)
@@ -59,22 +60,23 @@ def receive_file():
 # 统一异常处理
 @app.errorhandler(Exception)
 def handle_all_exceptions(error):
-    msg = '遇到一个错误：'+str(error)
+    msg = '遇到一个错误：' + str(error)
+    notifier(msg)
     return Result.error(msg, 500)
 
 # 检查启动条件
-def check_startup_conditions():
+def check_startup_conditions() -> (bool, str):
     if not os.path.exists(config.save_path):
         return False, '文件保存路径："{config.save_path}"不存在，请检查配置文件"{CONFIG_FILE_NAME}"'
     if utils.is_program_running():
         return False, '请不要重复启动'
-    return True, f'上传文件保存路径：{config.save_path}"'
+    return True, f'文件保存路径：{config.save_path}"'
 
 
 if __name__ == '__main__':
     success, startup_msg = check_startup_conditions()
     if success:
-        toaster("启动成功\n" + startup_msg)
+        notifier("启动成功\n" + startup_msg)
         app.run(host='0.0.0.0', port=53843)
     else:
-        toaster("启动失败\n" + startup_msg)
+        notifier("启动失败\n" + startup_msg)
