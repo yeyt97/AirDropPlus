@@ -3,7 +3,6 @@ import psutil
 import win32clipboard
 import win32con
 
-
 def avoid_duplicate_filename(save_path, filename):
     base_filename, extension = os.path.splitext(filename)
     counter = 1
