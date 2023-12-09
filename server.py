@@ -40,7 +40,7 @@ class Server:
             filename = request.form['filename']
             new_filename = utils.avoid_duplicate_filename(self.config.save_path, filename)
             file.save(os.path.join(self.config.save_path, new_filename))
-            notifier("收到: " + new_filename + f'\n保存在: {self.config.save_path}')
+            notifier.notify('接收文件', "收到: " + new_filename + f'\n保存在: {self.config.save_path}')
             return Result.success(msg="发送成功")
 
         # 获取电脑端复制的文件的路径列表
@@ -56,7 +56,7 @@ class Server:
         def receive_file():
             path = request.form.get('path')
             file_name = os.path.basename(path)
-            notifier(f'发送：{file_name}')
+            notifier.notify('发送文件:', 'file_name')
             with open(path, 'rb') as f:
                 file_content = f.read()
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=file_name)
@@ -64,6 +64,28 @@ class Server:
         # 统一异常处理
         @self.blueprint.errorhandler(Exception)
         def handle_all_exceptions(error):
-            msg = '遇到一个错误：' + str(error)
-            notifier(msg)
+            msg = str(error)
+            notifier.notify('遇到一个错误:', msg)
             return Result.error(msg, 500)
+
+        # 获取电脑端剪贴板
+        @self.blueprint.route('/clipboard/receive')
+        def receive_clipboard():
+            clipboard = utils.get_clipboard_content()
+            if clipboard != '':
+                notifier.notify('发送剪贴板内容:', utils.truncate_string(clipboard, 40))
+                return Result.success(data=clipboard)
+            else:
+                notifier.notify('发送剪贴板内容失败:', 'Windows剪贴板为空')
+                return Result.error(msg='Windows剪贴板为空')
+
+        # 接收手机端剪贴板
+        @self.blueprint.route('/clipboard/send', methods=['POST'])
+        def send_clipboard():
+            clipboard = request.form['clipboard']
+            if clipboard is None or clipboard == '':
+                notifier.notify('接收剪贴板内容失败:', 'iPhone剪贴板为空')
+                return Result.error(msg='iPhone剪贴板为空')
+            notifier.notify('收到剪贴板内容:', utils.truncate_string(clipboard, 40))
+            success, msg = utils.set_clipboard_content()
+            return Result.success(msg='发送成功') if success else Result.error(msg=msg)

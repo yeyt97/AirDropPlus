@@ -15,11 +15,11 @@ if __name__ == '__main__':
     config = Config(config_file_path)
 
     if not os.path.exists(config.save_path):
-        notifier('启动成功\n' + '文件保存路径："{config.save_path}"不存在，请检查配置文件"{CONFIG_FILE_NAME}"')
+        notifier.notify('启动失败', '文件保存路径："{config.save_path}"不存在，请检查配置文件"{CONFIG_FILE_NAME}"')
         sys.exit()
     if utils.is_program_running():
-        notifier('启动失败\n' + '请不要重复启动')
+        notifier.notify('启动失败', '请不要重复启动')
         sys.exit()
-    notifier('启动成功\n' + f'文件保存路径：{config.save_path}"')
+    notifier.notify('启动成功', f'文件保存路径：{config.save_path}"')
     server = Server(config)
     server.run(host='0.0.0.0', port=53843)
