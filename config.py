@@ -9,13 +9,11 @@ class Config:
         self.key = None
         self.save_path = None
         self.version = None
-        self.set_config_path(config_path)
-        self.get_config()
+        self.get_config(config_path)
 
-    def set_config_path(self, config_path):
+    # 刷新配置
+    def get_config(self, config_path):
         self.config_path = config_path
-
-    def get_config(self):
         self.config = configparser.ConfigParser()
         self.config.read(self.config_path, encoding='utf-8')
         # 获取键值对
