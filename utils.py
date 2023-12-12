@@ -42,7 +42,7 @@ def get_clipboard_content():
         if win32clipboard.IsClipboardFormatAvailable(win32con.CF_UNICODETEXT):
             text_data = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
     except Exception as e:
-        notifier.notify(f'获取剪贴板出错: {e}')
+        notifier.notify('错误', f'获取剪贴板出错: {e}')
     finally:
         win32clipboard.CloseClipboard()
     return text_data
@@ -54,14 +54,8 @@ def set_clipboard_content():
             text_data = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
             win32clipboard.SetClipboardData(win32clipboard.CF_UNICODETEXT, text_data)
     except Exception as e:
-        notifier.notify(f'获取剪贴板出错: {e}')
+        notifier.notify('错误', f'获取剪贴板出错: {e}')
         return False, e
     finally:
         win32clipboard.CloseClipboard()
     return True, None
-
-def truncate_string(input_str, n):
-    if len(input_str) > n:
-        return input_str[:n-3] + "..."
-    else:
-        return input_str

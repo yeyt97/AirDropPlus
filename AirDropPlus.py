@@ -15,7 +15,7 @@ if __name__ == '__main__':
     config = Config(config_file_path)
 
     if not os.path.exists(config.save_path):
-        notifier.notify('启动失败', '文件保存路径："{config.save_path}"不存在，请检查配置文件"{CONFIG_FILE_NAME}"')
+        notifier.notify('启动失败', f'文件保存路径："{config.save_path}"不存在，请检查配置文件"{CONFIG_FILE_NAME}"')
         sys.exit()
     if utils.is_program_running():
         notifier.notify('启动失败', '请不要重复启动')
