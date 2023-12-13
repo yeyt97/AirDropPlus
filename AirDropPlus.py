@@ -25,4 +25,4 @@ if __name__ == '__main__':
     try:
         server.run(host='0.0.0.0', port=config.port)
     except Exception as e:
-        notifier.notify('启动失败', '请检查是否端口被占用')
+        notifier.notify('启动失败', f'错误信息：{e}')
