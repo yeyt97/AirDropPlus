@@ -98,5 +98,5 @@ class Server:
                 notifier.notify('剪贴板', '接收失败: iPhone剪贴板为空')
                 return Result.error(msg='iPhone剪贴板为空')
             notifier.notify('剪贴板', f'收到剪贴板内容: {clipboard}')
-            success, msg = utils.set_clipboard_content()
+            success, msg = utils.set_clipboard_content(clipboard)
             return Result.success(msg='发送成功') if success else Result.error(msg=msg)

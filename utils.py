@@ -29,7 +29,8 @@ def get_clipboard_files():
     try:
         file_path_list = win32clipboard.GetClipboardData(win32con.CF_HDROP)
         file_path_list = [file for file in file_path_list if os.path.exists(file) and not os.path.isdir(file)]
-    except:
+    except Exception as e:
+        notifier.notify('错误', f'获取文件列表出错: {e}')
         file_path_list = ()
     finally:
         win32clipboard.CloseClipboard()
@@ -47,14 +48,13 @@ def get_clipboard_content():
         win32clipboard.CloseClipboard()
     return text_data
 
-def set_clipboard_content():
+def set_clipboard_content(text: str):
     win32clipboard.OpenClipboard()
     try:
-        if win32clipboard.IsClipboardFormatAvailable(win32con.CF_UNICODETEXT):
-            text_data = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-            win32clipboard.SetClipboardData(win32clipboard.CF_UNICODETEXT, text_data)
+        win32clipboard.EmptyClipboard()
+        win32clipboard.SetClipboardData(win32clipboard.CF_UNICODETEXT, text)
     except Exception as e:
-        notifier.notify('错误', f'获取剪贴板出错: {e}')
+        notifier.notify('错误', f'设置剪贴板出错: {e}')
         return False, e
     finally:
         win32clipboard.CloseClipboard()
