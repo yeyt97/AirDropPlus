@@ -13,5 +13,7 @@ class Config:
         if self.save_path == '' or self.save_path is None:
             self.save_path = os.path.join(os.path.expanduser('~'), 'Downloads')
 
+        self.port = self.config.get('config', 'port')
+
         self.version = self.config.get('info', 'version')
 

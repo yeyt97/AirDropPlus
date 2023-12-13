@@ -22,4 +22,7 @@ if __name__ == '__main__':
         sys.exit()
     notifier.notify('启动成功', f'文件保存路径：{config.save_path}"')
     server = Server(config)
-    server.run(host='0.0.0.0', port=53843)
+    try:
+        server.run(host='0.0.0.0', port=config.port)
+    except Exception as e:
+        notifier.notify('启动失败', '请检查是否端口被占用')
