@@ -20,16 +20,30 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 
 # 使用
 1. Windows 端安装 bonjour，这样可以通过 “设备名.local” 访问到 Windows，而不需要通过 IP 地址。
-![img.png](pic/windows_device_name.png)
+    <div style="text-align:center;">
+        <img src="pic/windows_device_name.png" alt="Image" style="width: 50%;">
+    </div>
 2. 修改配置文件 config.ini，设置文件保存路径和密钥
 3. 手机端下载快捷指令
    - 文件：https://www.icloud.com/shortcuts/88c51247dbca418c8534db68e7582982
    - 剪贴板：https://www.icloud.com/shortcuts/165ed535903a4ac6936650c8fdc76d9b
 4. 设置快捷指令的主机为 Windows 的设备名(不是用户名)，设置快捷指令的密钥和 config.ini 中的密钥相同
-![shortcut_conf.png](pic/shortcut_conf.png)
+    <div style="text-align:center;">
+        <img src="pic/shortcut_conf.png" alt="Image" style="width: 50%;">
+    </div>
 5. 发送文件时在文件分享菜单执行 AirDrop Plus 快捷指令。接收文件时，直接执行 AirDrop Plus 快捷指令
-6. 同步剪贴板直接执行快捷指令，点击发送或者接收
+    <div style="text-align:center;">
+        <img src="pic/send_file.png" alt="Image" style="width: 50%;">
+        <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
+    </div>
+6. 同步剪贴板直接执行快捷指令，点击发送或者接收!
+    <div style="text-align:center;">
+        <img src="pic/sync_clipboard.png" alt="Image" style="width: 50%;">
+    </div>
 7. Windows 端退出在任务管理器中退出
+    <div style="text-align:center;">
+        <img src="pic/exit.png" alt="Image" style="width: 50%;">
+    </div>
 
 # API
 ## 请求头参数
