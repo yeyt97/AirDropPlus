@@ -27,7 +27,7 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 3. 手机端下载快捷指令
    - 文件：https://www.icloud.com/shortcuts/88c51247dbca418c8534db68e7582982
    - 剪贴板：https://www.icloud.com/shortcuts/165ed535903a4ac6936650c8fdc76d9b
-4. 设置快捷指令的主机为 Windows 的设备名(不是用户名)，设置快捷指令的密钥和 config.ini 中的密钥相同
+4. 设置快捷指令的主机为 Windows 的设备名(不是用户名).local，设置快捷指令的密钥和 config.ini 中的密钥相同
     <div style="text-align:center;">
         <img src="pic/shortcut_conf.png" alt="Image" style="width: 50%;">
     </div>
