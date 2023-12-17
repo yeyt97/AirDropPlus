@@ -47,10 +47,10 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 
 # API
 ## 请求头参数
-| 参数名             | 类型     | 描述      |
-|-----------------|--------|---------|
-| ShortcutVersion | String | 快捷指令的版本 |
-| Authorization   | String | 密钥      |
+| 参数名             | 类型     | 描述                                  |
+|-----------------|--------|-------------------------------------|
+| ShortcutVersion | String | 快捷指令的版本，需要和 config.ini 中的 version一致 |
+| Authorization   | String | 密钥，需要和 config.ini 中的 key 一致         |
 
 ## 文件发送
 > 移动端发送一个文件到PC
