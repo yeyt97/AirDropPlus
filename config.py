@@ -13,7 +13,7 @@ class Config:
         if self.save_path == '' or self.save_path is None:
             self.save_path = os.path.join(os.path.expanduser('~'), 'Downloads')
 
-        self.port = self.config.get('config', 'port')
+        self.port = int(self.config.get('config', 'port'))
+        self.win10_mode = False if self.config.get('config', 'win10_mode')=='0' else True
 
         self.version = self.config.get('info', 'version')
-
