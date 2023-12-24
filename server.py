@@ -49,6 +49,13 @@ class Server:
             return 'Hello world!'
 
         """ ----------- 文件 ----------- """
+        # 手机端发送接下来要发送的文件列表
+        @self.blueprint.route('/file/send/list', methods=['POST'])
+        def send_file_list():
+            filename_list = request.form['file_list'].splitlines()
+            self.notifier.show_future_files(self.config.save_path, filename_list, to_mobile=False)
+            return Result.success(msg="发送成功")
+
         # 手机端发送文件
         @self.blueprint.route('/file/send', methods=['POST'])
         def send_file():
@@ -61,11 +68,11 @@ class Server:
             file.save(os.path.join(self.config.save_path, filename))
 
             if notify_content != '':
-                ori_filename_list = notify_content.split('\n')
+                ori_filename_list = notify_content.splitlines()
                 if len(ori_filename_list) == 1:
-                    self.notifier.show_file(self.config.save_path, filename, ori_filename)
+                    self.notifier.show_received_file(self.config.save_path, filename, ori_filename)
                 else:
-                    self.notifier.show_files(self.config.save_path, ori_filename_list)
+                    self.notifier.show_received_files(self.config.save_path, ori_filename_list)
             return Result.success(msg="发送成功")
 
         # 获取电脑端复制的文件的路径列表
@@ -77,6 +84,8 @@ class Server:
                 self.notifier.notify('错误', msg)
                 return Result.error(msg=msg)
             if len(res) > 0:
+                file_names = [os.path.basename(path) for path in res]
+                self.notifier.show_future_files(None, file_names, to_mobile=True)
                 return Result.success(data=res)
             return Result.error(msg='Windows未复制文件')
 
@@ -85,7 +94,7 @@ class Server:
         def receive_file():
             path = request.form.get('path')
             file_name = os.path.basename(path)
-            self.notifier.notify('文件', f'发送: {file_name}')
+            # self.notifier.notify('文件', f'发送: {file_name}')
             with open(path, 'rb') as f:
                 file_content = f.read()
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=file_name)
