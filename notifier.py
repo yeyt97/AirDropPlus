@@ -106,7 +106,8 @@ class Win11Notifier(INotifier):
         num_files = len(ori_filename_list)
         if num_files == 0:
             raise ValueError('文件数量不能为0')
-        content = [f"收到{num_files}个文件:"] + ori_filename_list
+
+        content = [f"收到{num_files}个文件:", ', '.join(ori_filename_list)]
         toast = Toast(content)
         toast.AddAction(ToastButton("打开文件夹", arguments=f'open={folder}'))
         toast.AddAction(ToastButton("关闭", arguments='ignore='))
