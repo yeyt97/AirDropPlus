@@ -10,6 +10,7 @@ flask==3.0.0
 win10toast==0.9
 psutil==5.9.6
 pyinstaller==6.2.0
+windows_toasts==1.0.1
 ```
 
 # 打包

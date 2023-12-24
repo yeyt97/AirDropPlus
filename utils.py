@@ -65,7 +65,3 @@ def is_image_file(file_path):
         return True
     else:
         return False
-
-def is_windows_11():
-    version = sys.getwindowsversion()
-    return version.major == 10 and version.build >= 22000

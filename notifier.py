@@ -37,8 +37,10 @@ class INotifier(ABC):
         """
         pass
 
-
-class Win10Notifier(INotifier):
+"""
+不带按钮和图片显示的通知，适用于旧版系统
+"""
+class BasicNotifier(INotifier):
     def __init__(self):
         self.notifier = ToastNotifier()
 
@@ -53,30 +55,32 @@ class Win10Notifier(INotifier):
         msg = "\n".join(ori_filename_list)
         self.notify(f"收到{num_files}个文件:", msg)
 
-
 """
-用来修复windows_toasts不能显示中文路径的图片的问题
+可交互式通知
 """
-class MyToastDisplayImage(ToastDisplayImage):
-    class MyToastImage(ToastImage):
-        def __init__(self, imagePath):
-            super().__init__(imagePath)
-            self.path = urllib.parse.unquote(Path(imagePath).as_uri())
-    @classmethod
-    def fromPath(
-            cls,
-            imagePath: Union[str, os.PathLike],
-            altText: Optional[str] = None,
-            position: ToastImagePosition = ToastImagePosition.Inline,
-            circleCrop: bool = False,
-    ) -> ToastDisplayImage:
-        image = cls.MyToastImage(imagePath)
-        return ToastDisplayImage(image, altText, position, circleCrop)
-
-
-class Win11Notifier(INotifier):
+class Notifier(INotifier):
     def __init__(self):
         self.toaster = InteractableWindowsToaster("")
+
+    """
+    用来修复windows_toasts不能显示中文路径的图片的问题
+    """
+    class MyToastDisplayImage(ToastDisplayImage):
+        class MyToastImage(ToastImage):
+            def __init__(self, imagePath):
+                super().__init__(imagePath)
+                self.path = urllib.parse.unquote(Path(imagePath).as_uri())
+
+        @classmethod
+        def fromPath(
+                cls,
+                imagePath: Union[str, os.PathLike],
+                altText: Optional[str] = None,
+                position: ToastImagePosition = ToastImagePosition.Inline,
+                circleCrop: bool = False,
+        ) -> ToastDisplayImage:
+            image = cls.MyToastImage(imagePath)
+            return ToastDisplayImage(image, altText, position, circleCrop)
 
     @staticmethod
     def _button_callback(args: ToastActivatedEventArgs):
@@ -96,7 +100,7 @@ class Win11Notifier(INotifier):
         toast = Toast([f"收到文件: {ori_filename}"])
         file_path = os.path.join(folder, filename)
         if utils.is_image_file(file_path):
-            toast.AddImage(MyToastDisplayImage.fromPath(file_path))
+            toast.AddImage(self.MyToastDisplayImage.fromPath(file_path))
         toast.AddAction(ToastButton("打开文件夹", arguments=f'select={file_path}'))
         toast.AddAction(ToastButton("关闭", arguments='ignore='))
         toast.on_activated = self._button_callback
@@ -115,5 +119,5 @@ class Win11Notifier(INotifier):
         self.toaster.show_toast(toast)
 
 
-def create_notifier(is_win11: bool = False):
-    return Win11Notifier() if is_win11 else Win10Notifier()
+def create_notifier(basic: bool = True):
+    return BasicNotifier() if basic else Notifier()
