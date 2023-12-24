@@ -1,7 +1,10 @@
 import os
-
+import urllib
+from pathlib import Path
+from typing import Union, Optional
 from win10toast import ToastNotifier
-from windows_toasts import ToastButton, ToastActivatedEventArgs, Toast, InteractableWindowsToaster, ToastDisplayImage
+from windows_toasts import ToastButton, ToastActivatedEventArgs, Toast, InteractableWindowsToaster, ToastDisplayImage, \
+    ToastImage, ToastImagePosition
 import subprocess
 from abc import ABC, abstractmethod
 
@@ -51,6 +54,26 @@ class Win10Notifier(INotifier):
         self.notify(f"收到{num_files}个文件:", msg)
 
 
+"""
+用来修复windows_toasts不能显示中文路径的图片的问题
+"""
+class MyToastDisplayImage(ToastDisplayImage):
+    class MyToastImage(ToastImage):
+        def __init__(self, imagePath):
+            super().__init__(imagePath)
+            self.path = urllib.parse.unquote(Path(imagePath).as_uri())
+    @classmethod
+    def fromPath(
+            cls,
+            imagePath: Union[str, os.PathLike],
+            altText: Optional[str] = None,
+            position: ToastImagePosition = ToastImagePosition.Inline,
+            circleCrop: bool = False,
+    ) -> ToastDisplayImage:
+        image = cls.MyToastImage(imagePath)
+        return ToastDisplayImage(image, altText, position, circleCrop)
+
+
 class Win11Notifier(INotifier):
     def __init__(self):
         self.toaster = InteractableWindowsToaster("")
@@ -73,8 +96,7 @@ class Win11Notifier(INotifier):
         toast = Toast([f"收到文件: {ori_filename}"])
         file_path = os.path.join(folder, filename)
         if utils.is_image_file(file_path):
-            # todo: windows_toasts 库无法显示路径包含中文的图片
-            toast.AddImage(ToastDisplayImage.fromPath(str(file_path), circleCrop=False))
+            toast.AddImage(MyToastDisplayImage.fromPath(file_path))
         toast.AddAction(ToastButton("打开文件夹", arguments=f'select={file_path}'))
         toast.AddAction(ToastButton("关闭", arguments='ignore='))
         toast.on_activated = self._button_callback
