@@ -81,7 +81,7 @@ class BasicNotifier(INotifier):
 """
 class Notifier(INotifier):
     def __init__(self):
-        self.toaster = InteractableWindowsToaster("")
+        self.toaster = InteractableWindowsToaster("", 'Microsoft.Windows.Explorer')
 
     """
     用来修复windows_toasts不能显示中文路径的图片的问题
