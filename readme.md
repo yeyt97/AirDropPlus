@@ -29,12 +29,16 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 - cmd
 - bash
 - homename
-<img width="237" alt="image" src="https://github.com/Darrenpig/AirDropPlus/assets/121377489/edc53573-7935-4a46-83de-8fc0b7e75e38">
+-    <div style="text-align:center;">
+        <img  alt="image" src="https://github.com/Darrenpig/AirDropPlus/assets/121377489/edc53573-7935-4a46-83de-8fc0b7e75e38" alt="Image" style="width: 50%;">
+    </div>
 
 1. Windows 端安装 bonjour，这样可以通过 “设备名.local” 访问到 Windows，而不需要通过 IP 地址。
     <div style="text-align:center;">
-        <img src="pic/windows_device_name.png" alt="Image" style="width: 50%;">
+        <img  alt="image" src="https://github.com/Darrenpig/AirDropPlus/assets/121377489/a102c33f-9ace-4512-acbb-6ba45797550c" alt="Image" style="width: 50%;">
     </div>
+
+
 2. 修改配置文件 config.ini，设置文件保存路径和密钥(在Releases!!!里)
 3. 手机端下载快捷指令
    - 文件：https://www.icloud.com/shortcuts/dbbc2d75a611471babbe69e128db6702
