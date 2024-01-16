@@ -24,6 +24,13 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 ## 直接下载Releases!!!
 ## 直接下载Releases!!!
 ## 直接下载Releases!!!
+
+- win+R
+- cmd
+- bash
+- homename
+<img width="237" alt="image" src="https://github.com/Darrenpig/AirDropPlus/assets/121377489/edc53573-7935-4a46-83de-8fc0b7e75e38">
+
 1. Windows 端安装 bonjour，这样可以通过 “设备名.local” 访问到 Windows，而不需要通过 IP 地址。
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 50%;">
