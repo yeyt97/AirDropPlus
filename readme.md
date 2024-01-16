@@ -5,12 +5,12 @@
 # 依赖
 
 ```
-python==3.10.6
+python==3.12.1
 flask==3.0.0
 win10toast==0.9
-psutil==5.9.6
-pyinstaller==6.2.0
-windows_toasts==1.0.1
+psutil==5.9.7
+pyinstaller==6.3.0
+windows_toasts==1.0.2
 ```
 
 # 打包
@@ -20,15 +20,19 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 ```
 
 # 使用
+
+## 直接下载Releases!!!
+## 直接下载Releases!!!
+## 直接下载Releases!!!
 1. Windows 端安装 bonjour，这样可以通过 “设备名.local” 访问到 Windows，而不需要通过 IP 地址。
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 50%;">
     </div>
-2. 修改配置文件 config.ini，设置文件保存路径和密钥
+2. 修改配置文件 config.ini，设置文件保存路径和密钥(在Releases!!!里)
 3. 手机端下载快捷指令
    - 文件：https://www.icloud.com/shortcuts/dbbc2d75a611471babbe69e128db6702
    - 剪贴板：https://www.icloud.com/shortcuts/8b0a81ddf004422fbbb8fc8099546811
-4. 设置快捷指令的主机为 Windows 的设备名(不是用户名).local，设置快捷指令的密钥和 config.ini 中的密钥相同
+4. 设置快捷指令的主机为 `Windows 的设备名`.local，设置快捷指令的密钥和 config.ini 中的密钥相同
     <div style="text-align:center;">
         <img src="pic/shortcut_conf.png" alt="Image" style="width: 50%;">
     </div>
@@ -45,6 +49,10 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
     <div style="text-align:center;">
         <img src="pic/exit.png" alt="Image" style="width: 50%;">
     </div>
+
+> 这里直接 Shift+Ctrl+Esc
+
+
 
 # API
 ## 请求头参数
