@@ -44,7 +44,8 @@ class Server:
                 self.notifier.notify("⚠️错误:", "密钥错误")
                 return Result.error(msg='密钥错误', code=401)
             version = request.headers.get("ShortcutVersion")
-            if version != self.config.version:
+            client_version = '.'.join(self.config.version.split('.')[:2])
+            if '.'.join(version.split('.')[:2]) != client_version:
                 msg = f'''版本不匹配\n\nWindows版本为：{self.config.version}\n快捷指令版本为：{version}'''
                 self.notifier.notify("⚠️错误:", msg)
                 return Result.error(msg=msg, code=400)
