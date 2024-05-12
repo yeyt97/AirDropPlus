@@ -1,10 +1,7 @@
 import os
-import urllib
-from pathlib import Path
-from typing import Union, Optional
+from typing import Optional
 from win10toast import ToastNotifier
-from windows_toasts import ToastButton, ToastActivatedEventArgs, Toast, InteractableWindowsToaster, ToastDisplayImage, \
-    ToastImage, ToastImagePosition
+from windows_toasts import ToastButton, ToastActivatedEventArgs, Toast, InteractableWindowsToaster, ToastDisplayImage
 import subprocess
 from abc import ABC, abstractmethod
 
@@ -94,10 +91,16 @@ class Notifier(INotifier):
             subprocess.Popen(f'explorer {arg}')
 
     def notify(self, title, msg):
+        self.clear_toasts()
         toast = Toast([title, msg])
         self.toaster.show_toast(toast)
 
+    def clear_toasts(self):
+        self.toaster.clear_scheduled_toasts()
+        self.toaster.clear_toasts()
+
     def show_received_file(self, folder, filename, ori_filename):
+        self.clear_toasts()
         toast = Toast([f"收到文件: {ori_filename}"])
         file_path = os.path.join(folder, filename)
         if utils.is_image_file(file_path):
@@ -108,6 +111,7 @@ class Notifier(INotifier):
         self.toaster.show_toast(toast)
 
     def show_received_files(self, folder, ori_filename_list):
+        self.clear_toasts()
         num_files = len(ori_filename_list)
         if num_files == 0:
             raise ValueError('文件数量不能为0')
@@ -119,6 +123,7 @@ class Notifier(INotifier):
         self.toaster.show_toast(toast)
 
     def show_future_files(self, folder: str, filename_list: list, to_mobile: bool):
+        self.clear_toasts()
         num_files = len(filename_list)
         if num_files == 0:
             raise ValueError('文件数量不能为0')
