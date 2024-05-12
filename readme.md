@@ -13,12 +13,13 @@ pyinstaller==6.2.0
 windows_toasts==1.0.1
 pillow==10.1.0
 pyperclip~=1.8.2
+pystray==0.19.5
 ```
 
 # 打包
 
 ```bash
-pyinstaller --add-data 'config;config' -w AirDropPlus.py
+pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
 ```
 
 # 使用
