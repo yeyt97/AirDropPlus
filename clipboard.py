@@ -4,8 +4,7 @@ import os
 
 import pyperclip
 import win32con
-from win32clipboard import OpenClipboard, GetClipboardData, CloseClipboard, IsClipboardFormatAvailable, EmptyClipboard, \
-    SetClipboardData
+from win32clipboard import OpenClipboard, GetClipboardData, CloseClipboard, IsClipboardFormatAvailable
 from PIL import ImageGrab
 
 from enum import Enum
