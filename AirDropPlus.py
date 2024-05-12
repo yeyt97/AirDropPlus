@@ -26,7 +26,7 @@ def create_icon():
 
     def on_edit_config(icon, item):
         notifier.notify('AirDrop Plus', '编辑完成请保存，并重启 AirDrop Plus')
-        subprocess.run(["notepad", config_file_path])
+        subprocess.Popen(["notepad", config_file_path])
 
     menu = (
         MenuItem(text='设置', action=on_edit_config),
