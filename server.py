@@ -1,13 +1,24 @@
 import io
 import os
+import traceback
 
 import flask
-from flask import Flask, request, Blueprint
+from flask import Flask, request, Blueprint, stream_with_context
 
 from config import Config
 import utils
 from notifier import INotifier
 from result import Result
+
+from clipboard import ClipboardType, ClipboardUtil
+
+
+def get_clipboard_dto(clipboard_type: ClipboardType, data: str):
+    return {
+        'type': clipboard_type.value,
+        'data': data
+    }
+
 
 class Server:
     def __init__(self, config: Config, notifier: INotifier):
@@ -30,17 +41,20 @@ class Server:
                 return
             auth_header = request.headers.get("Authorization")
             if auth_header != self.config.key:
+                self.notifier.notify("⚠️错误:", "密钥错误")
                 return Result.error(msg='密钥错误', code=401)
             version = request.headers.get("ShortcutVersion")
             if version != self.config.version:
-                msg = f'版本不匹配\n\nWindows版本为：{self.config.version}\n快捷指令版本为：{version}'
+                msg = f'''版本不匹配\n\nWindows版本为：{self.config.version}\n快捷指令版本为：{version}'''
+                self.notifier.notify("⚠️错误:", msg)
                 return Result.error(msg=msg, code=400)
 
         # 统一异常处理
         @self.blueprint.errorhandler(Exception)
         def handle_all_exceptions(error):
+            traceback.print_exc()
             msg = str(error)
-            self.notifier.notify('错误', '遇到一个错误' + msg)
+            self.notifier.notify('⚠️错误:', msg)
             return Result.error(msg, 500)
 
         """ ----------- 测试 ----------- """
@@ -63,9 +77,14 @@ class Server:
                 return Result.error(msg="文件不存在")
             file = request.files['file']
             ori_filename = request.form['filename']
+            ori_filename = utils.clean_file_name(ori_filename)
             notify_content = request.form['notify_content']
             filename = utils.avoid_duplicate_filename(self.config.save_path, ori_filename)
-            file.save(os.path.join(self.config.save_path, filename))
+            file_path = os.path.join(self.config.save_path, filename)
+            with open(file_path, 'wb') as f:
+                for chunk in stream_with_context(file.stream):
+                    if chunk:
+                        f.write(chunk)
 
             if notify_content != '':
                 ori_filename_list = notify_content.splitlines()
@@ -75,26 +94,11 @@ class Server:
                     self.notifier.show_received_files(self.config.save_path, ori_filename_list)
             return Result.success(msg="发送成功")
 
-        # 获取电脑端复制的文件的路径列表
-        @self.blueprint.route('/file/receive/list')
-        def receive_file_list():
-            success, res = utils.get_clipboard_files()
-            if not success:
-                msg = f'未复制文件: {res}'
-                self.notifier.notify('错误', msg)
-                return Result.error(msg=msg)
-            if len(res) > 0:
-                file_names = [os.path.basename(path) for path in res]
-                self.notifier.show_future_files(None, file_names, to_mobile=True)
-                return Result.success(data=res)
-            return Result.error(msg='Windows未复制文件')
-
         # 获取电脑端文件
         @self.blueprint.route('/file/receive', methods=['POST'])
         def receive_file():
             path = request.form.get('path')
             file_name = os.path.basename(path)
-            # self.notifier.notify('文件', f'发送: {file_name}')
             with open(path, 'rb') as f:
                 file_content = f.read()
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=file_name)
@@ -103,28 +107,39 @@ class Server:
         # 获取电脑端剪贴板
         @self.blueprint.route('/clipboard/receive')
         def receive_clipboard():
-            success, res = utils.get_clipboard_content()
-            if not success:
-                msg = f'获取剪贴板出错: {res}'
-                self.notifier.notify('错误', msg)
-                return Result.error(msg=msg)
-            if res != '':
-                self.notifier.notify('剪贴板', f'发送: {res}')
-                return Result.success(data=res)
-            else:
-                self.notifier.notify('剪贴板', '发送失败: Windows剪贴板为空')
-                return Result.error(msg='Windows剪贴板为空')
+            # 文本
+            success, res = ClipboardUtil.get_text()
+            if success:
+                dto = get_clipboard_dto(ClipboardType.TEXT, res)
+                self.notifier.notify('📝发送剪贴板文本:', res)
+                return Result.success(data=dto)
+            success, res = ClipboardUtil.get_files()
+            # 文件
+            if success:
+                dto = get_clipboard_dto(ClipboardType.FILE, res)
+                file_names = [os.path.basename(path) for path in res]
+                self.notifier.show_future_files(None, file_names, to_mobile=True)
+                return Result.success(data=dto)
+            # 图片
+            success, res = ClipboardUtil.get_img_base64()
+            if success:
+                dto = get_clipboard_dto(ClipboardType.IMG, res)
+                self.notifier.notify('🏞️发送剪贴板图片', "")
+                return Result.success(data=dto)
+
+            self.notifier.notify('⚠️发送剪贴板出错:', 'Windows剪贴板为空')
+            return Result.error(msg='Windows剪贴板为空')
 
         # 接收手机端剪贴板
         @self.blueprint.route('/clipboard/send', methods=['POST'])
         def send_clipboard():
-            clipboard = request.form['clipboard']
-            if clipboard is None or clipboard == '':
-                self.notifier.notify('剪贴板', '接收失败: iPhone剪贴板为空')
+            text = request.form['clipboard']
+            if text is None or text == '':
+                self.notifier.notify('⚠️设置剪贴板出错:', ' iPhone剪贴板为空')
                 return Result.error(msg='iPhone剪贴板为空')
-            success, msg = utils.set_clipboard_content(clipboard)
+            success, msg = ClipboardUtil.set_text(text)
             if success:
-                self.notifier.notify('剪贴板', f'收到剪贴板内容: {clipboard}')
+                self.notifier.notify('📝设置剪贴板文本:', text)
             else:
-                self.notifier.notify('错误', f'设置剪贴板出错: {msg}')
+                self.notifier.notify('⚠️设置剪贴板出错:', msg)
             return Result.success(msg='发送成功') if success else Result.error(msg=msg)

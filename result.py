@@ -1,10 +1,10 @@
-from flask import jsonify
+from flask import jsonify, Response
 
 
 class Result:
 
     @staticmethod
-    def jsonify(success: bool, data=None, msg: str = None):
+    def get_jsonify(success: bool, data: any = None, msg: str = None) -> Response:
         return jsonify({
             'success': success,
             'msg': msg,
@@ -12,9 +12,9 @@ class Result:
         })
 
     @staticmethod
-    def success(data=None, msg: str = "成功", code: int = 200):
-        return Result.jsonify(True, data, msg), code
+    def success(data=None, msg: str = "成功", code: int = 200) -> tuple[Response, int]:
+        return Result.get_jsonify(True, data, msg), code
 
     @staticmethod
-    def error(msg: str = "失败", code: int = 400):
-        return Result.jsonify(False, None, msg), code
+    def error(msg: str = "失败", code: int = 400) -> tuple[Response, int]:
+        return Result.get_jsonify(False, None, msg), code

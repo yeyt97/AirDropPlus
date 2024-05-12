@@ -20,31 +20,36 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 ```
 
 # 使用
-1. Windows 端安装 bonjour，这样可以通过 “设备名.local” 访问到 Windows，而不需要通过 IP 地址。
+1. Windows安装bonjour，这样就可以通过 '设备名.local' 访问到Windows，而不需要通过IP地址。
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 50%;">
     </div>
-2. 修改配置文件 config.ini，设置文件保存路径和密钥
-3. 手机端下载快捷指令
-   - 文件：https://www.icloud.com/shortcuts/dbbc2d75a611471babbe69e128db6702
-   - 剪贴板：https://www.icloud.com/shortcuts/8b0a81ddf004422fbbb8fc8099546811
-4. 设置快捷指令的主机为 Windows 的设备名(不是用户名).local，设置快捷指令的密钥和 config.ini 中的密钥相同
+2. 修改配置文件 'config.ini'，设置文件保存路径和密钥（打包后的配置文件在'_internal/config.ini'）
+3. 手机端下载快捷指令：https://www.icloud.com/shortcuts/a10fa721e97b4f67b1703c0730b12c06
+4. 设置快捷指令：
+   - 主机：Windows设备名.local
+   - 密钥：'config.ini' 中设置的密钥相同
+   - 简化：启用时会关闭发送iOS剪贴板的功能
+   <div style="text-align:center;">
+       <img src="pic/shortcut_conf.png" alt="Image" style="width: 50%;">
+   </div>
+5. 使用条件：iOS设备和Windows设备在同一个局域网下，也可以是Windows连接iOS的热点，或者iOS连接Windows的热点，使用热点发送文件不消耗流量
+6. 功能测试
+  - 发送文件：在文件分享菜单执行'AirDrop Plus'快捷指令
+  - 接收文件：直接执行'AirDrop Plus'快捷指令，也可以在辅助功能中设置成双击手机背面触发，15 Pro系列可以设置成侧边按钮触发。
+    - 当'简化'被开启时，运行后iOS接收Windows上复制的内容(文件、图像、文本)。
+    - 当'简化'被关闭时，运行后会弹出一个菜单，选择发送iOS剪贴板，还是接收Windows剪贴板
     <div style="text-align:center;">
-        <img src="pic/shortcut_conf.png" alt="Image" style="width: 50%;">
+      <img src="pic/send_file.png" alt="Image" style="width: 50%;">
+      <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
     </div>
-5. 发送文件时在文件分享菜单执行 AirDrop Plus 快捷指令。接收文件时，直接执行 AirDrop Plus 快捷指令
-    <div style="text-align:center;">
-        <img src="pic/send_file.png" alt="Image" style="width: 50%;">
-        <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
-    </div>
-6. 同步剪贴板直接执行快捷指令，点击发送或者接收!
-    <div style="text-align:center;">
-        <img src="pic/sync_clipboard.png" alt="Image" style="width: 50%;">
-    </div>
-7. Windows 端退出在任务管理器中退出
+7. 退出程序：在Windows任务管理器中右键'AirDropPlus.exe'，点击结束任务
     <div style="text-align:center;">
         <img src="pic/exit.png" alt="Image" style="width: 50%;">
     </div>
+
+# 问题
+1. 快捷指令运行超时：可能的原因
 
 # API
 ## 请求头参数
@@ -102,24 +107,6 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
         "data": null
     }
     ```
-## 文件接收列表
-> 获取PC复制的文件的文件地址列表
-### 请求
-#### 请求方式
-- HTTP 方法: GET
-- URL: /file/receive/list
-#### 请求参数
-- 无
-### 返回
-- 返回类型: JSON
-- 返回内容: 
-    ```json
-    {
-        "success": true,
-        "msg": "",
-        "data": ["c:/xx/xx/aa.txt", "c:/xx/xx/bb.txt"]
-    }
-    ```
 
 ## 文件接收
 > 移动端接收PC上的文件
@@ -161,7 +148,7 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
     }
     ```
 ## 剪贴板接收
-> 把PC端的剪贴板发送到移动端的剪贴板
+> 发送PC的剪贴板内容
 ### 请求
 #### 请求方式
 - HTTP 方法: GET
@@ -171,10 +158,36 @@ pyinstaller --add-data 'config;config' -w AirDropPlus.py
 ### 返回
 - 返回类型: JSON
 - 返回内容: 
+  - 剪贴板内容为文本时:
     ```json
     {
         "success": true,
         "msg": "",
-        "data": "PC端剪贴板的内容"
+        "data": {
+          "type": "text",
+          "data": "clipboard_text"
+        } 
     }
     ```
+  - 剪贴板为文件时:
+      ```json
+      {
+          "success": true,
+          "msg": "",
+          "data": {
+            "type": "file",
+            "data": ["c:/xx/xx/aa.png", "c:/xx/xx/bb.pdf"]
+          }
+      }
+      ```
+  - 剪贴板为图像时:
+      ```json
+      {
+          "success": true,
+          "msg": "",
+          "data": {
+            "type": "img",
+            "data": "img_base64_code"
+          }
+      }
+      ```
