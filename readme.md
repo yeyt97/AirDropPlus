@@ -10,7 +10,7 @@ flask==3.0.0
 win10toast==0.9
 psutil==5.9.6
 pyinstaller==6.2.0
-windows_toasts==1.0.1
+windows_toasts==1.1.0
 pillow==10.1.0
 pyperclip~=1.8.2
 pystray==0.19.5

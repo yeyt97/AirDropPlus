@@ -83,29 +83,9 @@ class Notifier(INotifier):
     def __init__(self):
         self.toaster = InteractableWindowsToaster("", 'Microsoft.Windows.Explorer')
 
-    """
-    用来修复windows_toasts不能显示中文路径的图片的问题
-    """
-    class MyToastDisplayImage(ToastDisplayImage):
-        class MyToastImage(ToastImage):
-            def __init__(self, imagePath):
-                super().__init__(imagePath)
-                self.path = urllib.parse.unquote(Path(imagePath).as_uri())
-
-        @classmethod
-        def fromPath(
-                cls,
-                imagePath: Union[str, os.PathLike],
-                altText: Optional[str] = None,
-                position: ToastImagePosition = ToastImagePosition.Inline,
-                circleCrop: bool = False,
-        ) -> ToastDisplayImage:
-            image = cls.MyToastImage(imagePath)
-            return ToastDisplayImage(image, altText, position, circleCrop)
-
     @staticmethod
     def _button_callback(args: ToastActivatedEventArgs):
-        if args.arguments == '':
+        if '=' not in args.arguments:
             return
         action, arg = args.arguments.split('=')
         if action == 'select':
@@ -121,7 +101,7 @@ class Notifier(INotifier):
         toast = Toast([f"收到文件: {ori_filename}"])
         file_path = os.path.join(folder, filename)
         if utils.is_image_file(file_path):
-            toast.AddImage(self.MyToastDisplayImage.fromPath(file_path))
+            toast.AddImage(ToastDisplayImage.fromPath(file_path))
         toast.AddAction(ToastButton("打开文件夹", arguments=f'select={file_path}'))
         toast.AddAction(ToastButton("关闭", arguments='ignore='))
         toast.on_activated = self._button_callback
