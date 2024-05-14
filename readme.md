@@ -1,8 +1,10 @@
 # AirDrop Plus
 
-用于 iOS 设备和 Windows 电脑之间进行文件传输，基于 HTTP，需要配合快捷指令使用
+A file transfer and clipboard synchronization tool between Windows and iOS devices implemented using Python and Shortcuts.
 
-# 依赖
+[中文](readme_zh.md)
+
+# Requirements
 
 ```
 python==3.10.6
@@ -15,83 +17,83 @@ pyperclip~=1.8.2
 pystray==0.19.5
 ```
 
-# 打包
+# How to Pack
 
 ```bash
 pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
 ```
 
-# 使用
-1. Windows安装bonjour，这样就可以通过 '设备名.local' 访问到Windows，而不需要通过IP地址。
+# Using Steps
+1. Install Bonjour on Windows, which allows you to access Windows using the 'DeviceName.local' instead of an IP address.
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. 修改配置文件 'config.ini'，设置文件保存路径和密钥（打包后的配置文件在'_internal/config.ini'）
-3. 启动 'AirDropPlus'，出现以下弹框请点击允许
+2. Modify the configuration file 'config.ini' to set the file save path and key (the packaged configuration file is located at '_internal/config.ini').
+3. Start 'AirDropPlus', and when prompted with the following pop-up, please click to allow.
     <div style="text-align:center;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
-4. 手机端下载快捷指令：https://www.icloud.com/shortcuts/3fecd0f09d594726b5e0ec46c976ccc4
-5. 设置快捷指令：
-   - 主机：Windows设备名.local（也可以是主机ip地址，不要加.local）
-   - 端口：和 'config.ini' 中设置的端口相同
-   - 密钥：和 'config.ini' 中设置的密钥相同
-   - 简化：启用时会关闭发送iOS剪贴板的功能
+4. Download the shortcut on the mobile device from: https://www.icloud.com/shortcuts/3fecd0f09d594726b5e0ec46c976ccc4
+5. Set up the shortcut:
+   - Host(主机)：Windows device name.local (or the host IP address, do not add .local)
+   - Port(端口)：The same port number set in 'config.ini'
+   - Key(密钥)：The same key set in 'config.ini'
+   - Simplify(简化)：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
    </div>
-6. 使用条件：iOS设备和Windows设备在同一个局域网下，也可以是Windows连接iOS的热点，或者iOS连接Windows的热点，使用热点发送文件不消耗流量
-7. 功能测试
-  - 发送文件：在文件分享菜单执行'AirDrop Plus'快捷指令
+6. Usage conditions: The iOS device and Windows device must be on the same local area network, or the Windows device can connect to the iOS hotspot, or vice versa. Using a hotspot to send files does not consume data.
+7. Functionality Testing:
+  - Send files: Execute the 'AirDrop Plus' shortcut from the file sharing menu.
     <div style="text-align:center;">
       <img src="pic/send_file.png" alt="Image" style="width: 35%;">
     </div>
-  - 接收文件：直接执行'AirDrop Plus'快捷指令，也可以在辅助功能中设置成双击手机背面触发，15 Pro系列可以设置成侧边按钮触发。
-    - 当'简化'被开启时，运行后iOS接收Windows上复制的内容(文件、图像、文本)。
-    - 当'简化'被关闭时，运行后会弹出一个菜单，选择发送iOS剪贴板，还是接收Windows剪贴板
+  - Receive files: Directly execute the 'AirDrop Plus' shortcut, or set it up in Accessibility to trigger with a double-tap on the back of the phone. The 15 Pro series can set it to trigger with the side button.
+    - When 'Simplify' is enabled, running it will allow iOS to receive content copied on Windows (files, images, text).
+    - When 'Simplify' is disabled, running it will bring up a menu to choose whether to send the iOS clipboard or receive the Windows clipboard.
     <div style="text-align:center;">
       <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
       <img src="pic/shortcut_menu.jpg" alt="Image" style="width: 30%;">
     </div>
 
-# 问题
-快捷指令运行超时：
-1. 检查局域网环境是否通畅（校园网环境可能局域网设备的通信是被禁止的） 
-2. 检查**config.ini**中设置的端口号是否与快捷指令中设置的一致
-3. 检查快捷指令设置的**主机名**是否与电脑**主机名**一致（主机名不能是中文）。也可以把**主机名.local**改成IP地址试试
-4. 检查电脑防火墙是否屏蔽了**config.ini**中设置的端口，删除与 AirDropPlus 相关的所有项，并重启 AirDropPlus。重启完成后请允许网络请求的弹框
+# Issues and solutions
+### 1. Shortcut Instruction Timeout:
+1. Check if the local area network (LAN) environment is unobstructed (in campus network environments, communication with LAN devices may be prohibited).
+2. Verify that the port number set in the **config.ini** file matches the one set in the shortcut instruction.
+3. Ensure that the hostname set in the shortcut instruction is consistent with **the computer's hostname** (the hostname should not be in Chinese). You can also try changing hostname.local to **IP address**.
+4. Check if the computer's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
 
-启动后没有通知，但后台查看进程是在运行的：
-1. 可能是电脑系统版本比较旧不支持交互式通知，在**config.ini**里改成传统通知试试
+### 2. No notification after startup, but the process is running in the background:
+1. It's possible that the computer's system version is too old to support interactive notifications. Try changing to basic notifications in the **config.ini** file.
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
     </div>
 
 # API
-## 0. 请求头参数
-| 参数名             | 类型     | 描述                                                            |
-|-----------------|--------|---------------------------------------------------------------|
-| ShortcutVersion | String | 快捷指令的版本，需要和 config.ini 中的 version 一致                          |
-| Authorization   | String | 密钥，需要和 config.ini 中的 key 前两位一致，例如 config.ini 为 1.5.1，此处需要是1.5 |
+## 0. Request Header Parameters
+| Arg Name        | Type   | Description                                                                                                                                                     |
+|-----------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ShortcutVersion | String | The version of the shortcut. It must match the 'version' in the config.ini file.                                                                                |
+| Authorization   | String | The key. It must match the first two segments of the 'key' in the config.ini file. For example, if the config.ini file has a version 1.5.1, this should be 1.5. |
 
-## 1. 发送文件
-> 移动端发送一个文件到PC
-### 请求
+## 1. Send File
+> Send a file from the mobile device to the PC.
+### URL
 [POST] /file
 
-请求体: Form
+Request Body: Form
 
-| 参数名            | 类型     | 描述                                                                                                                                |
-|----------------|--------|-----------------------------------------------------------------------------------------------------------------------------------|
-| file           | File   | 要发送的文件                                                                                                                            |
+| Arg Name | Type | Description      |
+|----------|------|------------------|
+| file     | File | The File to Send |
 
-### 返回
-- 返回类型: JSON
-- 返回内容:
+### Return
+- Return Type: JSON
+- Return Content:
     ```json
     {
         "success": true,
@@ -99,31 +101,31 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         "data": null
     }
     ```
-## 2. 获取文件
-> 获取PC上的文件
-### 请求
+## 2. Retrieve File
+> Retrieve a file on the PC
+### URL
 [GET] /file/[path]
 
-| 参数名      | 类型     | 描述            |
-|----------|--------|---------------|
-| path     | String | 文件路径的base64编码 |
-### 返回
-- 返回类型: 文件
+| Arg Name | Type   | Description                      |
+|----------|--------|----------------------------------|
+| path     | String | Base64 encoding of the file path |
+### Return
+- Return Type: File
 
-## 3. 发送剪贴板
-> 发送剪贴板发送到PC
-### 请求
+## 3. Send Clipboard
+> Send the clipboard to PC
+### URL
 [POST] /clipboard
-#### 请求参数
-- 请求体: Form
+### Request Parameters
+- Request Body: Form
 
-| 参数名       | 类型     | 描述       |
-|-----------|--------|----------|
-| clipboard | String | 移动端剪贴板内容 |
+| Arg Name  | Type   | Description              |
+|-----------|--------|--------------------------|
+| clipboard | String | Mobile Clipboard Content |
 
-### 返回
-- 返回类型: JSON
-- 返回内容:
+### Return
+- Return Type: JSON
+- Return Content:
     ```json
     {
         "success": true,
@@ -131,14 +133,14 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         "data": null
     }
     ```
-## 4. 获取剪贴板
-> 获取PC端的剪贴板内容
-### 请求
+## 4. Retrieve Clipboard Content
+> Retrieve the Clipboard Content on PC
+### URL
 [GET] /clipboard
-### 返回
-- 返回类型: JSON
-- 返回内容: 
-  - 剪贴板内容为文本时:
+### Return
+- Return Type: JSON
+- Return Content: 
+  - When the Clipboard Contains Text:
     ```json
     {
         "success": true,
@@ -149,18 +151,18 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         } 
     }
     ```
-  - 剪贴板为文件时:
+  - When the Clipboard Contains File:
       ```json
       {
           "success": true,
           "msg": "",
           "data": {
             "type": "file",
-            "data": ["c:/xx/xx/aa.png", "c:/xx/xx/bb.pdf"]
+            "data": ["Base64 encoding of the file1 path", "Base64 encoding of the file2 path", ...]
           }
       }
       ```
-  - 剪贴板为图像时:
+  - When the Clipboard Contains Image:
       ```json
       {
           "success": true,
@@ -171,10 +173,10 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
           }
       }
       ```
-## 5. 测试
-> 测试连接
-### 请求
+## 5. Test
+> Test Connection
+### URL
 [GET] /
-### 返回
-- 返回类型: Text
-- 返回内容: Hello world!
+### Return
+- Return Type: Text
+- Return Content: Hello world!
