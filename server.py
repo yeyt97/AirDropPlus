@@ -97,6 +97,9 @@ class Server:
         def receive_file(path):
             """ 电脑端发送文件 """
             path = file_path_decode(path)
+            if path is None:
+                self.notifier.notify("⚠️错误：", "文件路径解析出错")
+                return
             basename = os.path.basename(path)
             with open(path, 'rb') as f:
                 file_content = f.read()

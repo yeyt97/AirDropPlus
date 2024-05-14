@@ -2,7 +2,6 @@ import os
 import signal
 import subprocess
 import sys
-import threading
 
 from PIL import Image
 
@@ -41,8 +40,8 @@ def create_icon():
 def start_server() -> tuple[bool, str]:
     if not os.path.exists(config.save_path):
         return False, f'目录 "{config.save_path}" 不存在，请检查配置文件'
-    if utils.is_program_running():
-        return False, '请勿重复启动'
+    if utils.is_port_in_use(config.port):
+        return False, f'端口{config.port}被占用'
     try:
         server = Server(config, notifier)
         server.run_in_thread('0.0.0.0', config.port)
@@ -53,5 +52,10 @@ def start_server() -> tuple[bool, str]:
 
 if __name__ == '__main__':
     flag, msg = start_server()
-    notifier.notify("已启动" if flag else "启动失败", msg)
+    if flag:
+        notifier.notify("已启动", msg)
+    else:
+        notifier.notify("启动失败", msg)
+        sys.exit()
+
     create_icon()

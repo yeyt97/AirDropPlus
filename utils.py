@@ -1,6 +1,6 @@
 import base64
 import os
-import re
+import socket
 
 import psutil
 import imghdr
@@ -14,6 +14,7 @@ def avoid_duplicate_filename(save_path, filename):
         counter += 1
     return filename
 
+
 def is_program_running():
     program_name = "AirDropPlus.exe"
     count: int = 0
@@ -24,6 +25,7 @@ def is_program_running():
                 return True
     return False
 
+
 def is_image_file(file_path):
     image_type = imghdr.what(file_path)
     if image_type is not None:
@@ -31,8 +33,10 @@ def is_image_file(file_path):
     else:
         return False
 
+
 def file_path_encode(path):
     return base64.b64encode(path.encode('utf-8')).decode('utf-8')
+
 
 def file_path_decode(path):
     try:
@@ -40,9 +44,7 @@ def file_path_decode(path):
     except:
         return None
 
-if __name__ == '__main__':
-    path = r"C:\Users\11578\Downloads\PixPin_2024-05-14_08-24-08 (4).png"
-    encode = file_path_encode(path)
-    decode = file_path_decode(encode)
-    print(encode)
-    print(decode)
+
+def is_port_in_use(port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(('localhost', port)) == 0
