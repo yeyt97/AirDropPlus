@@ -1,0 +1,21 @@
+meta {
+  name: send file
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:53843/file/send
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: 123456
+  ShortcutVersion: 1.4
+}
+
+body:multipart-form {
+  file: @file(C:\Users\11578\Desktop\PixPin_2024-05-14_08-24-08.png)
+  notify_content: 
+}

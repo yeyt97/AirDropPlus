@@ -13,11 +13,6 @@ def avoid_duplicate_filename(save_path, filename):
         counter += 1
     return filename
 
-
-def clean_file_name(file_name):
-    cleaned_file_name = re.sub(r'[\\/*?:"<>|]', '', file_name)
-    return cleaned_file_name
-
 def is_program_running():
     program_name = "AirDropPlus.exe"
     count: int = 0

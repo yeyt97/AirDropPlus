@@ -11,6 +11,7 @@ from notifier import INotifier
 from result import Result
 
 from clipboard import ClipboardType, ClipboardUtil
+from werkzeug.utils import secure_filename
 
 
 def get_clipboard_dto(clipboard_type: ClipboardType, data: str):
@@ -77,11 +78,10 @@ class Server:
             if 'file' not in request.files:
                 return Result.error(msg="文件不存在")
             file = request.files['file']
-            ori_filename = request.form['filename']
-            ori_filename = utils.clean_file_name(ori_filename)
+            filename = secure_filename(file.filename)
             notify_content = request.form['notify_content']
-            filename = utils.avoid_duplicate_filename(self.config.save_path, ori_filename)
-            file_path = os.path.join(self.config.save_path, filename)
+            new_filename = utils.avoid_duplicate_filename(self.config.save_path, filename)
+            file_path = os.path.join(self.config.save_path, new_filename)
             with open(file_path, 'wb') as f:
                 for chunk in stream_with_context(file.stream):
                     if chunk:
@@ -90,7 +90,7 @@ class Server:
             if notify_content != '':
                 ori_filename_list = notify_content.splitlines()
                 if len(ori_filename_list) == 1:
-                    self.notifier.show_received_file(self.config.save_path, filename, ori_filename)
+                    self.notifier.show_received_file(self.config.save_path, new_filename, filename)
                 else:
                     self.notifier.show_received_files(self.config.save_path, ori_filename_list)
             return Result.success(msg="发送成功")
