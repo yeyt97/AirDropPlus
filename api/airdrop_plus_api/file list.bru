@@ -1,0 +1,15 @@
+meta {
+  name: file list
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:53843/file/list
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  file_list: aaa.txt/r/nbbb.txt
+}

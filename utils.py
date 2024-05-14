@@ -1,3 +1,4 @@
+import base64
 import os
 import re
 
@@ -29,3 +30,19 @@ def is_image_file(file_path):
         return True
     else:
         return False
+
+def file_path_encode(path):
+    return base64.b64encode(path.encode('utf-8')).decode('utf-8')
+
+def file_path_decode(path):
+    try:
+        return base64.b64decode(path).decode('utf-8')
+    except:
+        return None
+
+if __name__ == '__main__':
+    path = r"C:\Users\11578\Downloads\PixPin_2024-05-14_08-24-08 (4).png"
+    encode = file_path_encode(path)
+    decode = file_path_decode(encode)
+    print(encode)
+    print(decode)

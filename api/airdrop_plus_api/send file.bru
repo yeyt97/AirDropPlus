@@ -1,21 +1,11 @@
 meta {
   name: send file
   type: http
-  seq: 2
+  seq: 1
 }
 
-post {
-  url: http://localhost:53843/file/send
+get {
+  url: http://localhost:53843/file/QzpcVXNlcnNcMTE1NzhcRG93bmxvYWRzXFBpeFBpbl8yMDI0LTA1LTE0XzA4LTI0LTA4ICg0KS5wbmc=
   body: multipartForm
   auth: none
-}
-
-headers {
-  Authorization: 123456
-  ShortcutVersion: 1.4
-}
-
-body:multipart-form {
-  file: @file(C:\Users\11578\Desktop\PixPin_2024-05-14_08-24-08.png)
-  notify_content: 
 }
