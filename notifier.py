@@ -102,7 +102,7 @@ class Notifier(INotifier):
             elif action == 'copy':
                 success, e = clipboard.set_file(path)
                 if not success:
-                    self.notify("⚠️剪贴板设置错误", str(e))
+                    self.notify("⚠️剪贴板设置错误", e)
 
         self.clear_toasts()
         toast = Toast([f"收到文件: {filename}"])

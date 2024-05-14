@@ -102,7 +102,7 @@ def get_img_base64() -> tuple[bool, str]:
     return True, base64_str
 
 
-def set_files(paths) -> tuple[bool, Exception] | tuple[bool, None]:
+def set_files(paths) -> tuple[bool, any]:
     files = ("\0".join(paths)).replace("/", "\\")
     data = files.encode("U16")[2:] + b"\0\0"
     win32clipboard.OpenClipboard()
@@ -110,7 +110,7 @@ def set_files(paths) -> tuple[bool, Exception] | tuple[bool, None]:
         win32clipboard.EmptyClipboard()
         win32clipboard.SetClipboardData(win32clipboard.CF_HDROP, matedata + data)
     except Exception as e:
-        return False, e
+        return False, str(e)
     finally:
         win32clipboard.CloseClipboard()
     return True, None
