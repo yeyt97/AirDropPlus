@@ -6,8 +6,8 @@ import flask
 from flask import Flask, request, Blueprint, stream_with_context
 
 from config import Config
+from notifier import Notifier
 from utils import file_path_encode, avoid_duplicate_filename, file_path_decode
-from notifier import INotifier
 from result import Result
 
 import clipboard
@@ -22,7 +22,7 @@ def get_clipboard_dto(clipboard_type: clipboard.Type, data: str):
 
 
 class Server:
-    def __init__(self, config: Config, notifier: INotifier):
+    def __init__(self, config: Config, notifier: Notifier):
         self.config = config
         self.notifier = notifier
         self.blueprint = Blueprint('server', __name__)
@@ -62,15 +62,8 @@ class Server:
         """ ----------- 测试 ----------- """
         @self.blueprint.route('/')
         def test():
-            return 'Hello world!'
-
-        """ ----------- 文件 ----------- """
-        # 手机端发送接下来要发送的文件列表
-        @self.blueprint.route('/file/list', methods=['POST'])
-        def send_file_list():
-            filename_list = request.form['file_list'].splitlines()
-            self.notifier.show_future_files(self.config.save_path, filename_list, to_mobile=False)
-            return Result.success(msg="发送成功")
+            self.notifier.notify("Test", "🌎Hello World!")
+            return '🌎Hello world!'
 
         @self.blueprint.route('/file', methods=['POST'])
         def send_file():
@@ -89,23 +82,24 @@ class Server:
                 for chunk in stream_with_context(file.stream):
                     if chunk:
                         f.write(chunk)
-            self.notifier.show_received_file(self.config.save_path, new_filename, filename)
+            self.notifier.show_file(self.config.save_path, new_filename, filename)
             return Result.success(msg="发送成功")
 
         # 获取电脑端文件
         @self.blueprint.route('/file/<path>', methods=['GET'])
         def receive_file(path):
-            """ 获取电脑端文件 """
+            """ 电脑端发送文件 """
             path = file_path_decode(path)
             basename = os.path.basename(path)
             with open(path, 'rb') as f:
                 file_content = f.read()
+            self.notifier.notify("📄发送文件:", basename)
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=basename)
 
         """ ----------- 剪贴板 ----------- """
         @self.blueprint.route('/clipboard')
         def receive_clipboard():
-            """ 获取电脑端剪贴板 """
+            """ 电脑端发送剪贴板 """
             # 文本
             success, res = clipboard.get_text()
             if success:
@@ -116,9 +110,7 @@ class Server:
             success, res = clipboard.get_files()
             file_path_list_enc = [file_path_encode(path) for path in res]
             if success:
-                dto = get_clipboard_dto(clipboard.Type.FILE, str(file_path_list_enc))
-                file_names = [os.path.basename(path) for path in res]
-                self.notifier.show_future_files(None, file_names, to_mobile=True)
+                dto = get_clipboard_dto(clipboard.Type.FILE, file_path_list_enc)
                 return Result.success(data=dto)
             # 图片
             success, res = clipboard.get_img_base64()
@@ -134,7 +126,7 @@ class Server:
         @self.blueprint.route('/clipboard', methods=['POST'])
         def send_clipboard():
             """
-            发送手机端剪贴板
+            手机端发送剪贴板
             Body(Form):
                 - clipboard: clipboard contents
             """
