@@ -6,6 +6,8 @@ import subprocess
 from abc import ABC, abstractmethod
 
 import utils
+import clipboard
+
 
 class INotifier(ABC):
     @abstractmethod
@@ -80,16 +82,6 @@ class Notifier(INotifier):
     def __init__(self):
         self.toaster = InteractableWindowsToaster("", 'Microsoft.Windows.Explorer')
 
-    @staticmethod
-    def _button_callback(args: ToastActivatedEventArgs):
-        if '=' not in args.arguments:
-            return
-        action, arg = args.arguments.split('=')
-        if action == 'select':
-            subprocess.Popen(f'explorer /select,{arg}')
-        elif action == 'open':
-            subprocess.Popen(f'explorer {arg}')
-
     def notify(self, title, msg):
         self.clear_toasts()
         toast = Toast([title, msg])
@@ -99,15 +91,28 @@ class Notifier(INotifier):
         self.toaster.clear_scheduled_toasts()
         self.toaster.clear_toasts()
 
-    def show_received_file(self, folder, filename, ori_filename):
+    def show_received_file(self, folder, new_filename, filename):
+        def button_cb(args: ToastActivatedEventArgs):
+            action = args.arguments
+            path = os.path.join(folder, new_filename)
+            if action == 'select':
+                subprocess.Popen(f'explorer /select,{path}')
+            elif action == 'open':
+                subprocess.Popen(f'explorer {path}')
+            elif action == 'copy':
+                success, e = clipboard.set_file(path)
+                if not success:
+                    self.notify("⚠️剪贴板设置错误", str(e))
+
         self.clear_toasts()
-        toast = Toast([f"收到文件: {ori_filename}"])
-        file_path = os.path.join(folder, filename)
+        toast = Toast([f"收到文件: {filename}"])
+        file_path = os.path.join(folder, new_filename)
         if utils.is_image_file(file_path):
             toast.AddImage(ToastDisplayImage.fromPath(file_path))
-        toast.AddAction(ToastButton("打开文件夹", arguments=f'select={file_path}'))
-        toast.AddAction(ToastButton("关闭", arguments='ignore='))
-        toast.on_activated = self._button_callback
+        toast.AddAction(ToastButton("文件夹", arguments='select'))
+        toast.AddAction(ToastButton("打开", arguments='open'))
+        toast.AddAction(ToastButton("复制", arguments='copy'))
+        toast.on_activated = button_cb
         self.toaster.show_toast(toast)
 
     def show_received_files(self, folder, ori_filename_list):

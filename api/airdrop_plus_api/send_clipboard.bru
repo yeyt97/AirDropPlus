@@ -1,0 +1,15 @@
+meta {
+  name: send_clipboard
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:53843/clipboard
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  clipboard: dfgdfgdfgfd
+}

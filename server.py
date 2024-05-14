@@ -10,11 +10,11 @@ from utils import file_path_encode, avoid_duplicate_filename, file_path_decode
 from notifier import INotifier
 from result import Result
 
-from clipboard import ClipboardType, ClipboardUtil
+import clipboard
 from werkzeug.utils import secure_filename
 
 
-def get_clipboard_dto(clipboard_type: ClipboardType, data: str):
+def get_clipboard_dto(clipboard_type: clipboard.Type, data: str):
     return {
         'type': clipboard_type.value,
         'data': data
@@ -72,32 +72,30 @@ class Server:
             self.notifier.show_future_files(self.config.save_path, filename_list, to_mobile=False)
             return Result.success(msg="发送成功")
 
-        # 手机端发送文件
         @self.blueprint.route('/file', methods=['POST'])
         def send_file():
+            """
+            手机端发送文件
+            Body(Form):
+                - file: file
+            """
             if 'file' not in request.files:
                 return Result.error(msg="文件不存在")
             file = request.files['file']
             filename = secure_filename(file.filename)
-            notify_content = request.form['notify_content']
             new_filename = avoid_duplicate_filename(self.config.save_path, filename)
             file_path = os.path.join(self.config.save_path, new_filename)
             with open(file_path, 'wb') as f:
                 for chunk in stream_with_context(file.stream):
                     if chunk:
                         f.write(chunk)
-
-            if notify_content != '':
-                ori_filename_list = notify_content.splitlines()
-                if len(ori_filename_list) == 1:
-                    self.notifier.show_received_file(self.config.save_path, new_filename, filename)
-                else:
-                    self.notifier.show_received_files(self.config.save_path, ori_filename_list)
+            self.notifier.show_received_file(self.config.save_path, new_filename, filename)
             return Result.success(msg="发送成功")
 
         # 获取电脑端文件
         @self.blueprint.route('/file/<path>', methods=['GET'])
         def receive_file(path):
+            """ 获取电脑端文件 """
             path = file_path_decode(path)
             basename = os.path.basename(path)
             with open(path, 'rb') as f:
@@ -105,27 +103,27 @@ class Server:
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=basename)
 
         """ ----------- 剪贴板 ----------- """
-        # 获取电脑端剪贴板
         @self.blueprint.route('/clipboard')
         def receive_clipboard():
+            """ 获取电脑端剪贴板 """
             # 文本
-            success, res = ClipboardUtil.get_text()
+            success, res = clipboard.get_text()
             if success:
-                dto = get_clipboard_dto(ClipboardType.TEXT, res)
+                dto = get_clipboard_dto(clipboard.Type.TEXT, res)
                 self.notifier.notify('📝发送剪贴板文本:', res)
                 return Result.success(data=dto)
             # 文件
-            success, res = ClipboardUtil.get_files()
+            success, res = clipboard.get_files()
             file_path_list_enc = [file_path_encode(path) for path in res]
             if success:
-                dto = get_clipboard_dto(ClipboardType.FILE, str(file_path_list_enc))
+                dto = get_clipboard_dto(clipboard.Type.FILE, str(file_path_list_enc))
                 file_names = [os.path.basename(path) for path in res]
                 self.notifier.show_future_files(None, file_names, to_mobile=True)
                 return Result.success(data=dto)
             # 图片
-            success, res = ClipboardUtil.get_img_base64()
+            success, res = clipboard.get_img_base64()
             if success:
-                dto = get_clipboard_dto(ClipboardType.IMG, res)
+                dto = get_clipboard_dto(clipboard.Type.IMG, res)
                 self.notifier.notify('🏞️发送剪贴板图片', "")
                 return Result.success(data=dto)
 
@@ -135,11 +133,16 @@ class Server:
         # 接收手机端剪贴板
         @self.blueprint.route('/clipboard', methods=['POST'])
         def send_clipboard():
+            """
+            发送手机端剪贴板
+            Body(Form):
+                - clipboard: clipboard contents
+            """
             text = request.form['clipboard']
             if text is None or text == '':
                 self.notifier.notify('⚠️设置剪贴板出错:', ' iPhone剪贴板为空')
                 return Result.error(msg='iPhone剪贴板为空')
-            success, msg = ClipboardUtil.set_text(text)
+            success, msg = clipboard.set_text(text)
             if success:
                 self.notifier.notify('📝设置剪贴板文本:', text)
             else:
