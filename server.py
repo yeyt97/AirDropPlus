@@ -118,8 +118,8 @@ class Server:
                 return Result.success(data=dto)
             # 文件
             success, res = clipboard.get_files()
-            file_path_enc_list = [file_path_encode(path) for path in res]
             if success:
+                file_path_enc_list = [file_path_encode(path) for path in res]
                 dto = get_clipboard_dto(clipboard.Type.FILE, file_path_enc_list)
                 return Result.success(data=dto)
             # 图片
