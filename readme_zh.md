@@ -158,7 +158,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
           "msg": "",
           "data": {
             "type": "file",
-            "data": ["c:/xx/xx/aa.png", "c:/xx/xx/bb.pdf"]
+            "data": ["文件1路径的base64", "文件2路径的base64"]
           }
       }
       ```
