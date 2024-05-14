@@ -1,5 +1,6 @@
 import io
 import os
+import threading
 import traceback
 
 import flask
@@ -14,7 +15,7 @@ import clipboard
 from werkzeug.utils import secure_filename
 
 
-def get_clipboard_dto(clipboard_type: clipboard.Type, data: str):
+def get_clipboard_dto(clipboard_type: clipboard.Type, data):
     return {
         'type': clipboard_type.value,
         'data': data
@@ -26,15 +27,20 @@ class Server:
         self.config = config
         self.notifier = notifier
         self.blueprint = Blueprint('server', __name__)
-        self.register_routes()
+        self.register_unified_process()
+        self.register_test()
+        self.register_file()
+        self.register_clipboard()
         self.app = Flask(__name__)
         self.app.register_blueprint(self.blueprint)
 
     def run(self, host: str, port: int):
         self.app.run(host=host, port=port)
 
-    def register_routes(self):
-        """ ----------- 统一处理 ----------- """
+    def run_in_thread(self, host: str, port: int):
+        threading.Thread(target=lambda: self.app.run(host=host, port=port)).start()
+
+    def register_unified_process(self):
         # 统一认证
         @self.blueprint.before_request
         def check_api_key():
@@ -59,12 +65,13 @@ class Server:
             self.notifier.notify('⚠️错误:', msg)
             return Result.error(msg, 500)
 
-        """ ----------- 测试 ----------- """
+    def register_test(self):
         @self.blueprint.route('/')
         def test():
             self.notifier.notify("Test", "🌎Hello World!")
             return '🌎Hello world!'
 
+    def register_file(self):
         @self.blueprint.route('/file', methods=['POST'])
         def send_file():
             """
@@ -96,7 +103,7 @@ class Server:
             self.notifier.notify("📄发送文件:", basename)
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=basename)
 
-        """ ----------- 剪贴板 ----------- """
+    def register_clipboard(self):
         @self.blueprint.route('/clipboard')
         def receive_clipboard():
             """ 电脑端发送剪贴板 """
@@ -108,9 +115,9 @@ class Server:
                 return Result.success(data=dto)
             # 文件
             success, res = clipboard.get_files()
-            file_path_list_enc = [file_path_encode(path) for path in res]
+            file_path_enc_list = [file_path_encode(path) for path in res]
             if success:
-                dto = get_clipboard_dto(clipboard.Type.FILE, file_path_list_enc)
+                dto = get_clipboard_dto(clipboard.Type.FILE, file_path_enc_list)
                 return Result.success(data=dto)
             # 图片
             success, res = clipboard.get_img_base64()

@@ -18,6 +18,7 @@ config_file_path = os.path.join(SCRIPT_DIR, 'config', 'config.ini')
 config = Config(config_file_path)
 notifier = Notifier(config.basic_notifier)
 
+
 def create_icon():
     def on_exit(icon, item):
         notifier.notify('AirDrop Plus', '已退出')
@@ -35,21 +36,22 @@ def create_icon():
     image = Image.open(os.path.join(SCRIPT_DIR, 'static', 'icon.ico'))
     icon = Icon("AirDrop Plus", image, "AirDrop Plus", menu)
     icon.run()
-def start_server():
+
+
+def start_server() -> tuple[bool, str]:
     if not os.path.exists(config.save_path):
-        notifier.notify('启动失败', f'文件保存路径："{config.save_path}"不存在，请检查配置文件"{config_file_path}"')
-        sys.exit()
+        return False, f'目录 "{config.save_path}" 不存在，请检查配置文件'
     if utils.is_program_running():
-        notifier.notify('启动失败', '请不要重复启动')
-        sys.exit()
+        return False, '请勿重复启动'
     try:
         server = Server(config, notifier)
-        notifier.notify('启动成功', f'端口号：{config.port}\n文件保存路径：{config.save_path}"')
-        threading.Thread(target=lambda:server.run(host='0.0.0.0', port=config.port)).start()
+        server.run_in_thread('0.0.0.0', config.port)
     except Exception as e:
-        notifier.notify('启动失败', f'错误信息：{e}')
+        return False, f'错误信息：{e}'
+    return True, f'端口号：{config.port}\n文件保存路径：{config.save_path}"'
+
 
 if __name__ == '__main__':
-
-    start_server()
+    flag, msg = start_server()
+    notifier.notify("已启动" if flag else "启动失败", msg)
     create_icon()
