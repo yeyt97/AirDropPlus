@@ -1,8 +1,6 @@
 import base64
 import os
 import socket
-
-import psutil
 import imghdr
 
 
@@ -13,17 +11,6 @@ def avoid_duplicate_filename(save_path, filename):
         filename = f"{base_filename} ({counter}){extension}"
         counter += 1
     return filename
-
-
-def is_program_running():
-    program_name = "AirDropPlus.exe"
-    count: int = 0
-    for process in psutil.process_iter((['name'])):
-        if process.info['name'] == program_name:
-            count += 1
-            if count >= 2:  # 自身也占用一个
-                return True
-    return False
 
 
 def is_image_file(file_path):
