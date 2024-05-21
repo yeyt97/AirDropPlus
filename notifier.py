@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta, datetime
+
 from windows_toasts import ToastButton, ToastActivatedEventArgs, Toast, InteractableWindowsToaster, ToastDisplayImage, WindowsToaster
 import subprocess
 
@@ -56,4 +58,5 @@ class Notifier:
         toast.AddAction(ToastButton("🖼︎打开", arguments='open'))
         toast.AddAction(ToastButton("✂复制", arguments='copy'))
         toast.on_activated = button_cb
+        toast.on_dismissed = lambda args: self.toaster.clear_toasts()
         self.toaster.show_toast(toast)
