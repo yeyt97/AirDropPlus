@@ -158,7 +158,7 @@ Request Body: Form
           "msg": "",
           "data": {
             "type": "file",
-            "data": ["file2PathBase64", "file2PathBase64", ...]
+            "data": ["file1_path_base64", "file2_path_base64", "file3_path_base64"]
           }
       }
       ```
