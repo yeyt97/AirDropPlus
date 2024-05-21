@@ -19,6 +19,8 @@ class Notifier:
     def notify(self, title, msg):
         self.clear_toasts()
         toast = Toast([title, msg])
+        toast.on_dismissed = lambda args: self.toaster.clear_toasts()
+        toast.expiration_time = datetime.now()
         self.toaster.show_toast(toast)
 
     def clear_toasts(self):
@@ -59,4 +61,5 @@ class Notifier:
         toast.AddAction(ToastButton("✂复制", arguments='copy'))
         toast.on_activated = button_cb
         toast.on_dismissed = lambda args: self.toaster.clear_toasts()
+        toast.expiration_time = datetime.now()
         self.toaster.show_toast(toast)
