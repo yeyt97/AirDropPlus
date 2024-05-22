@@ -8,11 +8,10 @@ from flask import Flask, request, Blueprint, stream_with_context
 
 from config import Config
 from notifier import Notifier
-from utils import file_path_encode, avoid_duplicate_filename, file_path_decode
+from utils import file_path_encode, avoid_duplicate_filename, file_path_decode, clean_filename
 from result import Result
 
 import clipboard
-from werkzeug.utils import secure_filename
 
 
 def get_clipboard_dto(clipboard_type: clipboard.Type, data):
@@ -82,7 +81,7 @@ class Server:
             if 'file' not in request.files:
                 return Result.error(msg="文件不存在")
             file = request.files['file']
-            filename = secure_filename(file.filename)
+            filename = clean_filename(file.filename)
             new_filename = avoid_duplicate_filename(self.config.save_path, filename)
             file_path = os.path.join(self.config.save_path, new_filename)
             with open(file_path, 'wb') as f:

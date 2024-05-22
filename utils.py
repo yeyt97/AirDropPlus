@@ -1,5 +1,6 @@
 import base64
 import os
+import re
 import socket
 import imghdr
 
@@ -12,6 +13,9 @@ def avoid_duplicate_filename(save_path, filename):
         counter += 1
     return filename
 
+def clean_filename(file_name):
+    cleaned_file_name = re.sub(r'[\\/*?:"<>|]', '', file_name)
+    return cleaned_file_name
 
 def is_image_file(file_path):
     image_type = imghdr.what(file_path)
