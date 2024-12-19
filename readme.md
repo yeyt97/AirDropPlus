@@ -17,44 +17,68 @@ pyperclip~=1.8.2
 pystray==0.19.5
 ```
 
-# How to Pack
+# How to pack
 
 ```bash
 pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
 ```
 
-# Using Steps
-1. Install Bonjour on Windows, which allows you to access Windows using the 'DeviceName.local' instead of an IP address.
+# How to use
+0. Network
+    
+    - Your iPhone and PC must be on the same LAN, or the PC can connect to the iOS hotspot, or vice versa.
+    - (It doesn't use data when transferring files via a hotspot.)
+1. Install Bonjour
+    - Bonjour allows you to access Windows using the 'DeviceName.local' instead of an IP address.
+    - The latest version of Bonjour may encounter issues accessing 'DeviceName.local'. Please use an older version instead.
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. Modify the configuration file 'config.ini' to set the file save path and key (the packaged configuration file is located at '_internal/config.ini').
-3. Start 'AirDropPlus', and when prompted with the following pop-up, please click to allow.
+2. PC side setting
+    - Modify the configuration file 'config.ini' to set the file save path and key.
+   - The packaged configuration file is located at '_internal/config.ini'.
+3. Start PC side program
+   
+    Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
     <div style="text-align:center;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
-4. Download the shortcut on the mobile device from: https://www.icloud.com/shortcuts/3fecd0f09d594726b5e0ec46c976ccc4
+4. Get the shortcut on your iPhone.
+
+   https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
+      <div style="text-align:center;">
+       <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
+   </div>
 5. Set up the shortcut:
-   - Host(主机)：Windows device name.local (or the host IP address, do not add .local)
-   - Port(端口)：The same port number set in 'config.ini'
-   - Key(密钥)：The same key set in 'config.ini'
-   - Simplify(简化)：Enabling this will disable the function to send the iOS clipboard
+   - host：Windows 'DeviceName.local' (or the host IP address instead)
+   - port：The same port number set in 'config.ini'
+   - key：The same key set in 'config.ini'
+   - simplify：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
    </div>
-6. Usage conditions: The iOS device and Windows device must be on the same local area network, or the Windows device can connect to the iOS hotspot, or vice versa. Using a hotspot to send files does not consume data.
+6. Set the trigger method of the shortcut:
+   1. Set it up in 'Settings-Accessibility-Touch-BackTap' to trigger with a double-tap on the back of the iPhone.
+   2. The iPhone 15 Pro series can set it to trigger with the side button.
 7. Functionality Testing:
-  - Send files: Execute the 'AirDrop Plus' shortcut from the file sharing menu.
-    <div style="text-align:center;">
-      <img src="pic/send_file.png" alt="Image" style="width: 35%;">
-    </div>
-  - Receive files: Directly execute the 'AirDrop Plus' shortcut, or set it up in Accessibility to trigger with a double-tap on the back of the phone. The 15 Pro series can set it to trigger with the side button.
-    - When 'Simplify' is enabled, running it will allow iOS to receive content copied on Windows (files, images, text).
-    - When 'Simplify' is disabled, running it will bring up a menu to choose whether to send the iOS clipboard or receive the Windows clipboard.
-    <div style="text-align:center;">
-      <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
-      <img src="pic/shortcut_menu.jpg" alt="Image" style="width: 30%;">
-    </div>
+    - **Send files**:
+
+      Tap the 'AirDrop Plus' shortcut from the file sharing menu.
+      <div style="text-align:center;">
+        <img src="pic/send_file.png" alt="Image" style="width: 35%;">
+      </div>
+   - **Send texts**:
+     1. Copy the text which you want to send.
+     2. Trigger the shortcut, then tap the 'Send' option.
+     <div style="text-align:center;">
+       <img src="pic/shortcut_menu.png" alt="Image" style="width: 40%;">
+     </div>
+   - Receive files or texts: 
+     1. Trigger the shortcut
+     2. Tap the 'Receive' option to receive file or text from PC's clipboard.
+     <div style="text-align:center;">
+       <img src="pic/shortcut_menu.png" alt="Image" style="width: 40%;">
+     </div>
 
 # Issues and solutions
 ### 1. Shortcut Instruction Timeout:

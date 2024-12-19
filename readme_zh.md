@@ -53,7 +53,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
     - 当'简化'被关闭时，运行后会弹出一个菜单，选择发送iOS剪贴板，还是接收Windows剪贴板
     <div style="text-align:center;">
       <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
-      <img src="pic/shortcut_menu.jpg" alt="Image" style="width: 30%;">
+      <img src="pic/shortcut_menu.png" alt="Image" style="width: 30%;">
     </div>
 
 # 问题
