@@ -2,6 +2,7 @@ import os
 import signal
 import subprocess
 import sys
+import time
 
 from PIL import Image
 
@@ -57,5 +58,8 @@ if __name__ == '__main__':
     else:
         notifier.notify("启动失败", msg)
         sys.exit()
-
-    create_icon()
+    if config.show_icon:
+        create_icon()
+    else:
+        while True:
+            time.sleep(10)
