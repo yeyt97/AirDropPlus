@@ -7,9 +7,9 @@
 # 请作者喝杯咖啡
 <div style="text-align:center;">
     <p>支付宝</p>
-    <img src="pic/alipay.png" alt="Image" style="width: 35%;">
+    <img src="pic/alipay.png" alt="Image" style="width: 15%;">
     <p>微信</p>
-    <img src="pic/wechatpay.png" alt="Image" style="width: 35%;">
+    <img src="pic/wechatpay.png" alt="Image" style="width: 15%;">
 </div>
 
 # 依赖

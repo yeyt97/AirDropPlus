@@ -7,9 +7,9 @@ A file transfer and clipboard synchronization tool between Windows and iOS devic
 # Buy the author a coffee
 <div style="text-align:center;">
     <p>Alipay</p>
-    <img src="pic/alipay.png" alt="Image" style="width: 35%;">
+    <img src="pic/alipay.png" alt="Image" style="width: 15%;">
     <p>WechatPay</p>
-    <img src="pic/wechatpay.png" alt="Image" style="width: 35%;">
+    <img src="pic/wechatpay.png" alt="Image" style="width: 15%;">
 </div>
 
 # Requirements
