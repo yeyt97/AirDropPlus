@@ -17,27 +17,27 @@ pyperclip~=1.8.2
 pystray==0.19.5
 ```
 
-# How to pack
+# Packaging
 
 ```bash
 pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
 ```
 
-# How to use
+# Usage
 0. Network
     
     - Your iPhone and PC must be on the same LAN, or the PC can connect to the iOS hotspot, or vice versa.
     - (It doesn't use data when transferring files via a hotspot.)
-1. Install Bonjour
-    - Bonjour allows you to access Windows using the 'DeviceName.local' instead of an IP address.
-    - The latest version of Bonjour may encounter issues accessing 'DeviceName.local'. Please use an older version instead.
+1. Install Bonjour on PC (optional)
+    - Bonjour allows you to access Windows using the 'hostname.local' instead of an IP address.
+    - The latest version of Bonjour may encounter issues accessing 'hostname.local'. Please use an older version instead.
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. PC side setting
+2. Set up AirdropPlus
     - Modify the configuration file 'config.ini' to set the file save path and key.
    - The packaged configuration file is located at '_internal/config.ini'.
-3. Start PC side program
+3. Start PC AirDropPlus.exe
    
     Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
     <div style="text-align:center;">
@@ -50,7 +50,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
    </div>
 5. Set up the shortcut:
-   - host：Windows 'DeviceName.local' (or the host IP address instead)
+   - host：'hostname.local' (or the host IP address instead)
    - port：The same port number set in 'config.ini'
    - key：The same key set in 'config.ini'
    - simplify：Enabling this will disable the function to send the iOS clipboard
@@ -82,9 +82,9 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
 
 # Issues and solutions
 ### 1. Shortcut Instruction Timeout:
-1. Check if the local area network (LAN) environment is unobstructed (in campus network environments, communication with LAN devices may be prohibited).
+1. Check if the local area network (LAN) environment is unobstructed. In campus network environments, communication with LAN devices may be prohibited.
 2. Verify that the port number set in the **config.ini** file matches the one set in the shortcut instruction.
-3. Ensure that the hostname set in the shortcut instruction is consistent with **the computer's hostname** (the hostname should not be in Chinese). You can also try changing hostname.local to **IP address**.
+3. Ensure that the hostname set in the shortcut instruction is consistent with **the PC's hostname** (the hostname should not be in Chinese). You can also try changing **hostname.local** to **IP address**.
 4. Check if the computer's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
@@ -95,6 +95,13 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
 1. It's possible that the computer's system version is too old to support interactive notifications. Try changing to basic notifications in the **config.ini** file.
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
+    </div>
+
+### 3. The iPhone sent a Clipboard, but the PC received a file
+1. Up to now, the input type obtained via the shortcut depends on the language of the iOS device. I have only considered input types in English, Simplified Chinese, and Traditional Chinese. If your iOS device is set to another language, errors may occur.
+2. You can try adding the type name of 'Text' in your iOS device's language into the brackets, separated by '|'.
+    <div style="text-align:center;">
+      <img src="pic/shortcut_type.png" alt="Image" style="width: 50%;">
     </div>
 
 # API
