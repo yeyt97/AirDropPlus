@@ -24,76 +24,106 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
 ```
 
 # 使用
-1. Windows安装bonjour，这样就可以通过 '设备名.local' 访问到Windows，而不需要通过IP地址。
+0. 网络 
+    - 你的 iPhone 和 PC 必须在同一个局域网下, 或者 PC 连接 iPhone 热点，或 iPhone 连接 PC 热点。
+    - (使用热点传输文件不消耗流量)
+1. 在 PC 上安装 Bonjour (可选)
+    - 安装 Bonjour 可以使你的 PC 通过 'hostname.local' 访问，而不需要通过 IP 地址访问。
+    - 最新版的 Bonjour 可能会遇到无法通过 'hostname.local' 访问的情况. 建议降低版本。
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. 修改配置文件 'config.ini'，设置文件保存路径和密钥（打包后的配置文件在'_internal/config.ini'）
-3. 启动 'AirDropPlus'，出现以下弹框请点击允许
+2. 设置 AirdropPlus
+    - 自定义 'config.ini' 文件 文件保存目录和 key。
+    - 打包版的配置文件在 '_internal/config.ini' 目录下
+3. 启动 AirDropPlus.exe
+   
+    启动 'AirDropPlus.exe'，弹出如下弹框请点击允许。
     <div style="text-align:center;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
-4. 手机端下载快捷指令：https://www.icloud.com/shortcuts/3fecd0f09d594726b5e0ec46c976ccc4
-5. 设置快捷指令：
-   - 主机：Windows设备名.local（也可以是主机ip地址，不要加.local）
-   - 端口：和 'config.ini' 中设置的端口相同
-   - 密钥：和 'config.ini' 中设置的密钥相同
-   - 简化：启用时会关闭发送iOS剪贴板的功能
+4. 在 iPhone 上获取快捷指令
+
+   https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
+   <div style="text-align:center;">
+       <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
+   </div>
+5. 设置快捷指令:
+   - host：'hostname.local' (或者 PC 的 IP 地址)
+   - port：和 'config.ini' 中一样的 port
+   - key：和 'config.ini' 中一样的 key
+   - simplify：为 True 时禁用发送 iPhone 剪贴板的功能
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
    </div>
-6. 使用条件：iOS设备和Windows设备在同一个局域网下，也可以是Windows连接iOS的热点，或者iOS连接Windows的热点，使用热点发送文件不消耗流量
-7. 功能测试
-  - 发送文件：在文件分享菜单执行'AirDrop Plus'快捷指令
-    <div style="text-align:center;">
-      <img src="pic/send_file.png" alt="Image" style="width: 35%;">
-    </div>
-  - 接收文件：直接执行'AirDrop Plus'快捷指令，也可以在辅助功能中设置成双击手机背面触发，15 Pro系列可以设置成侧边按钮触发。
-    - 当'简化'被开启时，运行后iOS接收Windows上复制的内容(文件、图像、文本)。
-    - 当'简化'被关闭时，运行后会弹出一个菜单，选择发送iOS剪贴板，还是接收Windows剪贴板
-    <div style="text-align:center;">
-      <img src="pic/receive_file.png" alt="Image" style="width: 20%;">
-      <img src="pic/shortcut_menu.png" alt="Image" style="width: 30%;">
-    </div>
+6. 设置快捷指令触发方式:
+   1. 在 '设置-辅助功能-触控-轻点背面' 中设置双击手机背面触发快捷指令。
+   2. iPhone 15 Pro 系列可以通过侧边按钮触发。
+7. 功能测试:
+    - **发送文件**:
 
-# 问题
-### 1. 快捷指令运行超时：
-1. 检查局域网环境是否通畅（校园网环境可能局域网设备的通信是被禁止的） 
-2. 检查**config.ini**中设置的端口号是否与快捷指令中设置的一致
-3. 检查快捷指令设置的**主机名**是否与电脑**主机名**一致（主机名不能是中文）。也可以把**主机名.local**改成IP地址试试
-4. 检查电脑防火墙是否屏蔽了**config.ini**中设置的端口，删除与 AirDropPlus 相关的所有项，并重启 AirDropPlus。重启完成后请允许网络请求的弹框
+      在共享菜单中点击 'AirDrop Plus'。
+      <div style="text-align:center;">
+        <img src="pic/send_file.png" alt="Image" style="width: 35%;">
+      </div>
+   - **发送文本**:
+     1. 复制你想发送的文本
+     2. 触发快捷指令，点击 'Send' 选项。
+     <div style="text-align:center;">
+       <img src="pic/shortcut_menu.png" alt="Image" style="width: 40%;">
+     </div>
+   - **接收文件或文本**: 
+     1. 触发快捷指令
+     2. 点击 'Receive' 选项，以接收 PC 端剪贴板中的文件或文本。
+     <div style="text-align:center;">
+       <img src="pic/shortcut_menu.png" alt="Image" style="width: 40%;">
+     </div>
+
+# 问题和解决方法
+### 1. 快捷指令超时:
+1. 检查局域网是否通畅。校园网的局域网连接可能会被禁止。
+2. 检查 **config.ini** 中设置的 port 是否和快捷指令中设置的相同。
+3. 确保快捷指令里设置的 **设备名.local** 正确 (设备名不能是中文). 可以尝试把 **设备名.local** 换成 **IP address** 试试。
+4. 检查 PC 端防火墙是否有禁用 **config.ini** 中设置的端口号。移除所有有关AirDropPlus的项目，再重启 AirDropPlus，在弹框中允许网络访问。
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
 
-### 2. 启动后没有通知，但后台查看进程是在运行的：
-1. 可能是电脑系统版本比较旧不支持交互式通知，在**config.ini**里改成传统通知试试
+### 2. 启动后无通知，但后台进程还在运行:
+1. 可能是 Windows 版本太低，不支持交互式通知。尝试在 **config.ini** 中设置 'basic_notifications'。
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
     </div>
 
-# API
-## 0. 请求头参数
-| 参数名             | 类型     | 描述                                                            |
-|-----------------|--------|---------------------------------------------------------------|
-| ShortcutVersion | String | 快捷指令的版本，需要和 config.ini 中的 version 一致                          |
-| Authorization   | String | 密钥，需要和 config.ini 中的 key 前两位一致，例如 config.ini 为 1.5.1，此处需要是1.5 |
+### 3. iPhone 发送了剪贴板，但 PC 收到一个文件
+1. 到目前为止，快捷指令获取的输入类型是依赖 iOS 系统语言的，我只考虑到了英语、简体中文、繁体中文。如果你的系统是其他语言的，可能会遇到问题。
+2. 你可以把你系统语言中的文本类型的名称加入到括号里，使用 '|' 隔开。
+    <div style="text-align:center;">
+      <img src="pic/shortcut_type.png" alt="Image" style="width: 50%;">
+    </div>
 
-## 1. 发送文件
-> 移动端发送一个文件到PC
-### 请求
+# API
+## 0. Request Header Parameters
+| Arg Name        | Type   | Description                                                                                                                                                     |
+|-----------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ShortcutVersion | String | The version of the shortcut. It must match the 'version' in the config.ini file.                                                                                |
+| Authorization   | String | The key. It must match the first two segments of the 'key' in the config.ini file. For example, if the config.ini file has a version 1.5.1, this should be 1.5. |
+
+## 1. Send File
+> Send a file from the mobile device to the PC.
+### URL
 [POST] /file
 
-请求体: Form
+Request Body: Form
 
-| 参数名            | 类型     | 描述                                                                                                                                |
-|----------------|--------|-----------------------------------------------------------------------------------------------------------------------------------|
-| file           | File   | 要发送的文件                                                                                                                            |
+| Arg Name | Type | Description      |
+|----------|------|------------------|
+| file     | File | The File to Send |
 
-### 返回
-- 返回类型: JSON
-- 返回内容:
+### Return
+- Return Type: JSON
+- Return Content:
     ```json
     {
         "success": true,
@@ -101,31 +131,31 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         "data": null
     }
     ```
-## 2. 获取文件
-> 获取PC上的文件
+## 2. Retrieve File
+> Retrieve a file on the PC
 ### URL
 [GET] /file/[path]
 
-| 参数名      | 类型     | 描述            |
-|----------|--------|---------------|
-| path     | String | 文件路径的base64编码 |
-### 返回
-- 返回类型: 文件
+| Arg Name | Type   | Description                      |
+|----------|--------|----------------------------------|
+| path     | String | Base64 encoding of the file path |
+### Return
+- Return Type: File
 
-## 3. 发送剪贴板
-> 发送剪贴板发送到PC
+## 3. Send Clipboard
+> Send the clipboard to PC
 ### URL
 [POST] /clipboard
-### 请求参数
-- 请求体: Form
+### Request Parameters
+- Request Body: Form
 
-| 参数名       | 类型     | 描述       |
-|-----------|--------|----------|
-| clipboard | String | 移动端剪贴板内容 |
+| Arg Name  | Type   | Description              |
+|-----------|--------|--------------------------|
+| clipboard | String | Mobile Clipboard Content |
 
-### 返回
-- 返回类型: JSON
-- 返回内容:
+### Return
+- Return Type: JSON
+- Return Content:
     ```json
     {
         "success": true,
@@ -133,14 +163,14 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         "data": null
     }
     ```
-## 4. 获取剪贴板
-> 获取PC端的剪贴板内容
+## 4. Retrieve Clipboard Content
+> Retrieve the Clipboard Content on PC
 ### URL
 [GET] /clipboard
-### 返回
-- 返回类型: JSON
-- 返回内容: 
-  - 剪贴板内容为文本时:
+### Return
+- Return Type: JSON
+- Return Content: 
+  - When the Clipboard Contains Text:
     ```json
     {
         "success": true,
@@ -151,18 +181,18 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         } 
     }
     ```
-  - 剪贴板为文件时:
+  - When the Clipboard Contains File:
       ```json
       {
           "success": true,
           "msg": "",
           "data": {
             "type": "file",
-            "data": ["文件1路径的base64", "文件2路径的base64"]
+            "data": ["file1_path_base64", "file2_path_base64", "file3_path_base64"]
           }
       }
       ```
-  - 剪贴板为图像时:
+  - When the Clipboard Contains Image:
       ```json
       {
           "success": true,
@@ -173,10 +203,10 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
           }
       }
       ```
-## 5. 测试
-> 测试连接
+## 5. Test
+> Test Connection
 ### URL
 [GET] /
-### 返回
-- 返回类型: Text
-- 返回内容: Hello world!
+### Return
+- Return Type: Text
+- Return Content: Hello world!

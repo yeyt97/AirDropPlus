@@ -37,7 +37,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
 2. Set up AirdropPlus
     - Modify the configuration file 'config.ini' to set the file save path and key.
    - The packaged configuration file is located at '_internal/config.ini'.
-3. Start PC AirDropPlus.exe
+3. Start AirDropPlus.exe
    
     Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
     <div style="text-align:center;">
@@ -73,7 +73,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
      <div style="text-align:center;">
        <img src="pic/shortcut_menu.png" alt="Image" style="width: 40%;">
      </div>
-   - Receive files or texts: 
+   - **Receive files or texts**: 
      1. Trigger the shortcut
      2. Tap the 'Receive' option to receive file or text from PC's clipboard.
      <div style="text-align:center;">
@@ -81,18 +81,18 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
      </div>
 
 # Issues and solutions
-### 1. Shortcut Instruction Timeout:
+### 1. Shortcut Timeout:
 1. Check if the local area network (LAN) environment is unobstructed. In campus network environments, communication with LAN devices may be prohibited.
-2. Verify that the port number set in the **config.ini** file matches the one set in the shortcut instruction.
-3. Ensure that the hostname set in the shortcut instruction is consistent with **the PC's hostname** (the hostname should not be in Chinese). You can also try changing **hostname.local** to **IP address**.
-4. Check if the computer's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
+2. Verify that the port number set in the **config.ini** file matches the one set in the shortcut.
+3. Ensure that the hostname set in the shortcut is consistent with **the PC's hostname** (the hostname should not be in Chinese). You can also try changing **hostname.local** to **IP address**.
+4. Check if the PC's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
 
 ### 2. No notification after startup, but the process is running in the background:
-1. It's possible that the computer's system version is too old to support interactive notifications. Try changing to basic notifications in the **config.ini** file.
+1. It's possible that the PC's system version is too old to support interactive notifications. Try changing to basic notifications in the **config.ini** file.
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
     </div>
