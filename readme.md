@@ -4,6 +4,14 @@ A file transfer and clipboard synchronization tool between Windows and iOS devic
 
 [中文](readme_zh.md)
 
+# Buy the author a coffee
+<div style="text-align:center;">
+    <p>Alipay</p>
+    <img src="pic/alipay.png" alt="Image" style="width: 35%;">
+    <p>WechatPay</p>
+    <img src="pic/wechatpay.png" alt="Image" style="width: 35%;">
+</div>
+
 # Requirements
 
 ```
