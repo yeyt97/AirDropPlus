@@ -8,6 +8,7 @@ from flask import Flask, request, Blueprint, stream_with_context
 
 from config import Config
 from notifier import Notifier
+import utils
 from utils import file_path_encode, avoid_duplicate_filename, file_path_decode, clean_filename
 from result import Result
 
@@ -30,9 +31,18 @@ class Server:
         self.register_test()
         self.register_file()
         self.register_clipboard()
-        self.app = Flask(__name__)
+        self.register_settings()
+        self.app = Flask(__name__, template_folder='templates')
         self.app.register_blueprint(self.blueprint)
 
+    def check_localhost(self, client_ip):
+        allowed_ips = ['127.0.0.1', '::1']
+        local_ip = utils.get_local_ip()
+        if local_ip is not None:
+            allowed_ips.append(local_ip)
+        if client_ip not in allowed_ips:
+            self.notifier.notify('⚠️错误:', '该接口仅允许本地访问')
+            return Result.error(msg='该接口仅允许本地访问', code=403)
     def run(self, host: str, port: int):
         self.app.run(host=host, port=port)
 
@@ -43,7 +53,9 @@ class Server:
         # 统一认证
         @self.blueprint.before_request
         def check_api_key():
-            if request.path == '/':
+            if request.path in ['/']:
+                return
+            if request.path.startswith('/settings'):
                 return
             auth_header = request.headers.get("Authorization")
             if auth_header != self.config.key:
@@ -149,3 +161,35 @@ class Server:
             else:
                 self.notifier.notify('⚠️设置剪贴板出错:', msg)
             return Result.success(msg='发送成功') if success else Result.error(msg=msg)
+    
+    def register_settings(self):
+        # 配置页面
+        @self.blueprint.route('/settings')
+        def settings_page():
+            self.check_localhost(request.remote_addr)
+            return flask.render_template('settings.html', config=self.config)
+
+        @self.blueprint.route('/settings/configs')
+        def get_configs():
+            localhost_result = self.check_localhost(request.remote_addr)
+            if localhost_result is not None:
+                return localhost_result
+            config_dict = {
+                'key': self.config.key,
+                'save_path': self.config.save_path,
+                'port': self.config.port,
+                'basic_notifier': self.config.basic_notifier,
+                'show_icon': self.config.show_icon,
+                'version': self.config.version,
+            }
+            return Result.success(data=config_dict)
+
+        @self.blueprint.route('/settings/configs', methods=['POST'])
+        def set_configs():
+            localhost_result = self.check_localhost(request.remote_addr)
+            if localhost_result is not None:
+                return localhost_result
+            config_dict = request.json
+            self.config.update(config_dict)
+            self.notifier.notify("⚙️设置", "配置已保存")
+            return Result.success(data=config_dict)

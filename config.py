@@ -1,6 +1,7 @@
 import configparser
 import os
-
+from result import Result
+from utils import is_port_in_use
 
 class Config:
     def __init__(self, config_path):
@@ -19,3 +20,18 @@ class Config:
         self.show_icon = self.config.get('config', 'show_icon') == '1'
 
         self.version = self.config.get('info', 'version')
+
+    def update(self, data):
+        self.config.set('config', 'key', data['key'])
+        # self.config.set('config', 'save_path', data['save_path'])
+        self.config.set('config', 'port', str(data['port']))
+        self.config.set('config', 'basic_notifier', str(int(data['basic_notifier'])))
+        self.config.set('config','show_icon', str(int(data['show_icon'])))
+
+        self.key = data['key']
+        # self.save_path = data['save_path']
+        self.port = data['port']
+        self.basic_notifier = data['basic_notifier']
+        self.show_icon = data['show_icon']
+
+        self.config.write(open(self.config_path, 'w', encoding='utf-8'))

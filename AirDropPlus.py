@@ -12,6 +12,7 @@ from notifier import Notifier
 from server import Server
 
 from pystray import Icon, MenuItem
+import webbrowser
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(SCRIPT_DIR, 'config', 'config.ini')
@@ -28,9 +29,18 @@ def create_icon():
     def on_edit_config(icon, item):
         notifier.notify('AirDrop Plus', '编辑完成请保存，并重启 AirDrop Plus')
         subprocess.Popen(["notepad", config_file_path])
+    
+    def on_web_config(icon, item):
+        url = f"http://localhost:{config.port}/settings"
+        try:
+            webbrowser.open(url)
+            notifier.notify('AirDrop Plus', '已在默认浏览器打开 localhost')
+        except Exception as e:
+            notifier.notify('AirDrop Plus', f'打开浏览器失败: {e}')
 
     menu = (
-        MenuItem(text='设置', action=on_edit_config),
+        MenuItem(text='配置文件', action=on_edit_config),
+        MenuItem(text='网页配置', action=on_web_config),
         MenuItem(text='退出', action=on_exit),
     )
     image = Image.open(os.path.join(SCRIPT_DIR, 'static', 'icon.ico'))

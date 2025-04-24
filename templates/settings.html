@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置表单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .container {
+            width: 80%; /* 可以根据需要调整宽度 */
+            max-width: 800px; /* 限制最大宽度 */
+            padding: 20px;
+            border: 1px solid #ccc; /* 添加边框 */
+            border-radius: 5px; /* 圆角边框 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>设置</h1>
+        <form id="settingsForm">
+            <div class="form-group">
+                <label for="key">密钥:</label>
+                <input type="text" id="key" name="key">
+            </div>
+            <div class="form-group">
+                <label for="port">端口号:</label>
+                <input type="number" id="port" name="port" min="1" max="65535">
+            </div>
+            <div class="form-group">
+                <label for="key">保存路径:</label>
+                <input type="text" id="savePath" name="savePath">
+            </div>
+            <div class="form-group">
+                <label>是否启用传统通知样式:</label>
+                <label class="switch">
+                    <input type="checkbox" id="basicNotifier" name="basicNotifier">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>是否显示图标:</label>
+                <label class="switch">
+                    <input type="checkbox" id="showIcon" name="showIcon">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <button type="button" onclick="saveSettings()">保存</button>
+        </form>
+
+        <script>
+            window.addEventListener('load', getSettings());
+            
+            function getSettings() {
+                fetch('/settings/configs')
+                  .then(response => response.json())
+                  .then(data => {
+                        if (data.success) {
+                            const config = data.data;
+                            document.getElementById('key').value = config.key;
+                            document.getElementById('port').value = config.port;
+                            document.getElementById('savePath').value = config.save_path;
+                            document.getElementById('basicNotifier').checked = config.basic_notifier;
+                            document.getElementById('showIcon').checked = config.show_icon;
+                        }
+                    })
+                  .catch(error => {
+                        console.error('获取配置信息出错:', error);
+                        alert('获取配置信息出错');
+                    });
+            }
+
+            function saveSettings() {
+                const key = document.getElementById('key').value;
+                const port = document.getElementById('port').value;
+                const savePath = document.getElementById('savePath').value;
+                const basicNotifier = document.getElementById('basicNotifier').checked;
+                const showIcon = document.getElementById('showIcon').checked;
+                
+                const settingsData = {
+                    key: key,
+                    port: port,
+                    savePath: savePath,
+                    basic_notifier: basicNotifier,
+                    show_icon: showIcon
+                };
+
+                fetch('/settings/configs', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(settingsData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应异常');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('设置已保存!');
+                    } else {
+                        alert('保存设置失败: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('保存设置出错:', error);
+                    alert('保存设置出错，请稍后重试');
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>
