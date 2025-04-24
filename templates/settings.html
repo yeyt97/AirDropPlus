@@ -105,25 +105,30 @@
             </div>
             <div class="form-group">
                 <label for="port">端口号:</label>
-                <input type="number" id="port" name="port" min="1" max="65535">
+                <input type="number" id="port" name="port" min="1024" max="65535">
+                <small style="color: rgb(248, 108, 108);">重启软件后生效</small>
             </div>
             <div class="form-group">
                 <label for="key">保存路径:</label>
                 <input type="text" id="savePath" name="savePath">
             </div>
             <div class="form-group">
-                <label>是否启用传统通知样式:</label>
+                <label>传统通知样式:</label>
                 <label class="switch">
                     <input type="checkbox" id="basicNotifier" name="basicNotifier">
                     <span class="slider round"></span>
                 </label>
+                <br/>
+                <small style="color: rgb(248, 108, 108);">重启软件后生效</small>
             </div>
             <div class="form-group">
-                <label>是否显示图标:</label>
+                <label>显示图标:</label>
                 <label class="switch">
                     <input type="checkbox" id="showIcon" name="showIcon">
                     <span class="slider round"></span>
                 </label>
+                <br/>
+                <small style="color: rgb(248, 108, 108);">重启软件后生效，关闭后在'_internal/config.ini'中开启</small>
             </div>
             <button type="button" onclick="saveSettings()">保存</button>
         </form>
@@ -157,10 +162,15 @@
                 const basicNotifier = document.getElementById('basicNotifier').checked;
                 const showIcon = document.getElementById('showIcon').checked;
                 
+                if (!key || !port || !savePath) {
+                    alert('请填写完整的设置');
+                    return;
+                }
+
                 const settingsData = {
                     key: key,
                     port: port,
-                    savePath: savePath,
+                    save_path: savePath,
                     basic_notifier: basicNotifier,
                     show_icon: showIcon
                 };
@@ -182,13 +192,14 @@
                     if (data.success) {
                         alert('设置已保存!');
                     } else {
-                        alert('保存设置失败: ' + data.message);
+                        alert('保存设置失败: ' + data.msg);
                     }
                 })
                 .catch(error => {
-                    console.error('保存设置出错:', error);
-                    alert('保存设置出错，请稍后重试');
+                    console.error('保存设置出错');
+                    alert('保存设置出错');
                 });
+                location.reload();
             }
         </script>
     </div>

@@ -190,6 +190,9 @@ class Server:
             if localhost_result is not None:
                 return localhost_result
             config_dict = request.json
-            self.config.update(config_dict)
+            update_state = self.config.update(config_dict)
+            if update_state is not None:
+                self.notifier.notify("⚙️设置", "配置保存失败：" + update_state[0].json['msg'])
+                return update_state
             self.notifier.notify("⚙️设置", "配置已保存")
             return Result.success(data=config_dict)
