@@ -1,0 +1,115 @@
+# AirDropPlus translations
+msgid ""
+msgstr ""
+"Project-Id-Version: AirDropPlus\n"
+"POT-Creation-Date: 2024-03-24 12:00\n"
+"PO-Revision-Date: 2024-03-24 12:00\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "This interface only allows local access"
+msgstr "This interface only allows local access"
+
+msgid "Key error"
+msgstr "Key error"
+
+msgid "Version mismatch"
+msgstr "Version mismatch"
+
+msgid "Windows version: %(win_version)s\nShortcut version: %(shortcut_version)s"
+msgstr "Windows version: %(win_version)s\nShortcut version: %(shortcut_version)s"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Hello World!"
+msgstr "Hello World!"
+
+msgid "File does not exist"
+msgstr "File does not exist"
+
+msgid "Send successful"
+msgstr "Send successful"
+
+msgid "Error: File path parsing error"
+msgstr "Error: File path parsing error"
+
+msgid "Sending file:"
+msgstr "Sending file:"
+
+msgid "Sending clipboard text:"
+msgstr "Sending clipboard text:"
+
+msgid "Sending clipboard image"
+msgstr "Sending clipboard image"
+
+msgid "Error sending clipboard: Windows clipboard is empty"
+msgstr "Error sending clipboard: Windows clipboard is empty"
+
+msgid "Error setting clipboard: iPhone clipboard is empty"
+msgstr "Error setting clipboard: iPhone clipboard is empty"
+
+msgid "Error setting clipboard:"
+msgstr "Error setting clipboard:"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Configuration saved"
+msgstr "Configuration saved"
+
+msgid "Configuration save failed:"
+msgstr "Configuration save failed:"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Key"
+msgstr "Key"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Requires restart to take effect"
+msgstr "Requires restart to take effect"
+
+msgid "Save Path"
+msgstr "Save Path"
+
+msgid "Basic Notification Style"
+msgstr "Basic Notification Style"
+
+msgid "Show Icon"
+msgstr "Show Icon"
+
+msgid "Requires restart to take effect, enable in _internal/config.ini if disabled"
+msgstr "Requires restart to take effect, enable in _internal/config.ini if disabled"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Error getting configuration"
+msgstr "Error getting configuration"
+
+msgid "Please fill in all settings"
+msgstr "Please fill in all settings"
+
+msgid "Network response error"
+msgstr "Network response error"
+
+msgid "Settings saved!"
+msgstr "Settings saved!"
+
+msgid "Failed to save settings"
+msgstr "Failed to save settings"
+
+msgid "Error saving settings"
+msgstr "Error saving settings" 
