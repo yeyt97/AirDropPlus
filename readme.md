@@ -42,8 +42,7 @@ python build.py
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
 2. Set up AirdropPlus
-    - Modify the configuration file 'config.ini' to set the file save path and key.
-   - The packaged configuration file is located at '_internal/config.ini'.
+    - Right click on the tray icon and open the web menu with settings.
 3. Start AirDropPlus.exe
    
     Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
@@ -58,8 +57,8 @@ python build.py
    </div>
 5. Set up the shortcut:
    - host：'hostname.local' (or the host IP address instead)
-   - port：The same port number set in 'config.ini'
-   - key：The same key set in 'config.ini'
+   - port：The same port number set in 'web menu'
+   - key：The same key set in 'web menu'
    - simplify：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
