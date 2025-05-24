@@ -154,4 +154,19 @@ msgid "Failed to save settings"
 msgstr "Не удалось сохранить настройки"
 
 msgid "Error saving settings"
-msgstr "Ошибка сохранения настроек" 
+msgstr "Ошибка сохранения настроек"
+
+msgid "Received file:"
+msgstr "Получен файл:"
+
+msgid "Folder"
+msgstr "Папка"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Clipboard setting error"
+msgstr "Ошибка настройки буфера обмена" 

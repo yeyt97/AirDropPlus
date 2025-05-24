@@ -154,4 +154,19 @@ msgid "Failed to save settings"
 msgstr "保存设置失败"
 
 msgid "Error saving settings"
-msgstr "保存设置错误" 
+msgstr "保存设置错误"
+
+msgid "Received file:"
+msgstr "收到文件："
+
+msgid "Folder"
+msgstr "文件夹"
+
+msgid "Open"
+msgstr "打开"
+
+msgid "Copy"
+msgstr "复制"
+
+msgid "Clipboard setting error"
+msgstr "剪贴板设置错误" 
