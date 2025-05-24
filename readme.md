@@ -15,14 +15,13 @@ A file transfer and clipboard synchronization tool between Windows and iOS devic
 # Requirements
 
 ```
-python==3.10.6
 flask==3.0.0
-psutil==5.9.6
-pyinstaller==6.2.0
-windows_toasts==1.1.0
+flask-babel==4.0.0
 pillow==10.1.0
-pyperclip~=1.8.2
 pystray==0.19.5
+pyinstaller==6.2.0
+windows-toasts==1.1.0
+pyperclip==1.8.2
 ```
 
 # Packaging
