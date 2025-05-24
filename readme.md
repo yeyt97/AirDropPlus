@@ -28,7 +28,7 @@ pystray==0.19.5
 # Packaging
 
 ```bash
-pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
+python build.py
 ```
 
 # Usage
