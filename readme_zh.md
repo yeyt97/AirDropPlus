@@ -58,8 +58,8 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
    </div>
 5. 设置快捷指令:
    - host：'hostname.local' (或者 PC 的 IP 地址)
-   - port：和 'config.ini' 中一样的 port
-   - key：和 'config.ini' 中一样的 key
+   - port：和PC端设置中一样的 port
+   - key：和PC端设置中一样的 key
    - simplify：为 True 时禁用发送 iPhone 剪贴板的功能
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
@@ -90,7 +90,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
 # 问题和解决方法
 ### 1. 快捷指令超时:
 1. 检查局域网是否通畅。校园网的局域网连接可能会被禁止。
-2. 检查 **config.ini** 中设置的 port 是否和快捷指令中设置的相同。
+2. 检查PC端设置中的 port 是否和快捷指令中设置的相同。
 3. 确保快捷指令里设置的 **设备名.local** 正确 (设备名不能是中文). 可以尝试把 **设备名.local** 换成 **IP address** 试试。
 4. 检查 PC 端防火墙是否有禁用 **config.ini** 中设置的端口号。移除所有有关AirDropPlus的项目，再重启 AirDropPlus，在弹框中允许网络访问。
     <div style="text-align:center;">
@@ -99,7 +99,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
     </div>
 
 ### 2. 启动后无通知，但后台进程还在运行:
-1. 可能是 Windows 版本太低，不支持交互式通知。尝试在 **config.ini** 中设置 'basic_notifications'。
+1. 可能是 Windows 版本太低，不支持交互式通知。尝试在PC端设置中开启基本通知样式。
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
     </div>

@@ -57,8 +57,8 @@ python build.py
    </div>
 5. Set up the shortcut:
    - host：'hostname.local' (or the host IP address instead)
-   - port：The same port number set in 'web menu'
-   - key：The same key set in 'web menu'
+   - port：The same port as that in the PC-side settings
+   - key：The same key as that in the PC-side settings
    - simplify：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
@@ -89,7 +89,7 @@ python build.py
 # Issues and solutions
 ### 1. Shortcut Timeout:
 1. Check if the local area network (LAN) environment is unobstructed. In campus network environments, communication with LAN devices may be prohibited.
-2. Verify that the port number set in the **config.ini** file matches the one set in the shortcut.
+2. Check if the port in the PC-side settings is the same as that set in the shortcut commands.
 3. Ensure that the hostname set in the shortcut is consistent with **the PC's hostname** (the hostname should not be in Chinese). You can also try changing **hostname.local** to **IP address**.
 4. Check if the PC's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
     <div style="text-align:center;">
