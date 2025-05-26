@@ -21,6 +21,7 @@ def build():
         '--noconsole',
         '--hidden-import=winrt.windows.foundation.collections',
         '--clean',
+        '-w',
         'AirDropPlus.py'
     ])
 
