@@ -4,3 +4,4 @@
 *.spec
 __pycache__/
 .vscode/
+*.mo

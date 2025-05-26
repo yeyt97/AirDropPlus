@@ -19,13 +19,10 @@ def build():
         '--add-data=config;config',
         '--add-data=templates;templates',
         '--noconsole',
+        '--hidden-import=winrt.windows.foundation.collections',
         '--clean',
         'AirDropPlus.py'
     ])
-    shutil.copytree('config', 'dist/AirDropPlus/config', dirs_exist_ok=True)
-    shutil.copytree('static', 'dist/AirDropPlus/static', dirs_exist_ok=True)
-    shutil.copytree('translations', 'dist/AirDropPlus/translations', dirs_exist_ok=True)
-    shutil.copytree('templates', 'dist/AirDropPlus/templates', dirs_exist_ok=True)
 
 if __name__ == '__main__':
     build() 
