@@ -51,7 +51,7 @@ class Server:
         if local_ip is not None:
             allowed_ips.append(local_ip)
         if client_ip not in allowed_ips:
-            self.notifier.notify(_('⚠️Error:'), _('This interface only allows local access'))
+            self.notifier.notify("⚠️" + _('Error:'), _('This interface only allows local access'))
             return Result.error(msg=_('This interface only allows local access'), code=403)
     def run(self, host: str, port: int):
         self.app.run(host=host, port=port)
@@ -69,7 +69,7 @@ class Server:
                 return
             auth_header = request.headers.get("Authorization")
             if auth_header != self.config.key:
-                self.notifier.notify(_("⚠️Error:"), _("Key error"))
+                self.notifier.notify("⚠️" + _("Error:"), _("Key error"))
                 return Result.error(msg=_('Key error'), code=401)
             version = request.headers.get("ShortcutVersion")
             client_version = '.'.join(self.config.version.split('.')[:2])
@@ -78,7 +78,7 @@ class Server:
                     'win_version': self.config.version,
                     'shortcut_version': version
                 }
-                self.notifier.notify(_("⚠️Error:"), msg)
+                self.notifier.notify("⚠️" + _("Error:"), msg)
                 return Result.error(msg=msg, code=400)
 
         # 统一异常处理
@@ -86,7 +86,7 @@ class Server:
         def handle_all_exceptions(error):
             traceback.print_exc()
             msg = str(error)
-            self.notifier.notify(_('⚠️Error:'), msg)
+            self.notifier.notify("⚠️" + _('Error:'), msg)
             return Result.error(msg, 500)
 
     def register_test(self):
@@ -122,12 +122,12 @@ class Server:
             """ 电脑端发送文件 """
             path = file_path_decode(path)
             if path is None:
-                self.notifier.notify(_("⚠️Error："), _("Error: File path parsing error"))
+                self.notifier.notify("⚠️" + _("Error："), _("Error: File path parsing error"))
                 return
             basename = os.path.basename(path)
             with open(path, 'rb') as f:
                 file_content = f.read()
-            self.notifier.notify(_("📄Sending file:"), basename)
+            self.notifier.notify("📄" + _("Sending file:"), basename)
             return flask.send_file(io.BytesIO(file_content), as_attachment=True, download_name=basename)
 
     def register_clipboard(self):
@@ -138,7 +138,7 @@ class Server:
             success, res = clipboard.get_text()
             if success:
                 dto = get_clipboard_dto(clipboard.Type.TEXT, res)
-                self.notifier.notify(_('📝Sending clipboard text:'), res)
+                self.notifier.notify("📝" + _('Sending clipboard text:'), res)
                 return Result.success(data=dto)
             # 文件
             success, res = clipboard.get_files()
@@ -150,10 +150,10 @@ class Server:
             success, res = clipboard.get_img_base64()
             if success:
                 dto = get_clipboard_dto(clipboard.Type.IMG, res)
-                self.notifier.notify(_('🏞️Sending clipboard image'), "")
+                self.notifier.notify("🏞️" + _('Sending clipboard image'), "")
                 return Result.success(data=dto)
 
-            self.notifier.notify(_('⚠️Error sending clipboard:'), _('Windows clipboard is empty'))
+            self.notifier.notify("⚠️" + _('Error sending clipboard:'), _('Windows clipboard is empty'))
             return Result.error(msg=_('Windows clipboard is empty'))
 
         # 接收手机端剪贴板
@@ -166,13 +166,13 @@ class Server:
             """
             text = request.form['clipboard']
             if text is None or text == '':
-                self.notifier.notify(_('⚠️Error setting clipboard:'), _('iPhone clipboard is empty'))
+                self.notifier.notify("⚠️" + _('Error setting clipboard:'), _('iPhone clipboard is empty'))
                 return Result.error(msg=_('iPhone clipboard is empty'))
             success, msg = clipboard.set_text(text)
             if success:
-                self.notifier.notify(_('📝Sending clipboard text:'), text)
+                self.notifier.notify("📝" + _('Sending clipboard text:'), text)
             else:
-                self.notifier.notify(_('⚠️Error setting clipboard:'), msg)
+                self.notifier.notify("⚠️" + _('Error setting clipboard:'), msg)
             return Result.success(msg=_('Send successful')) if success else Result.error(msg=msg)
     
     def register_settings(self):
@@ -206,7 +206,7 @@ class Server:
             config_dict = request.json
             update_state = self.config.update(config_dict)
             if update_state is not None:
-                self.notifier.notify(_("⚙️Settings"), _("Configuration save failed:") + update_state[0].json['msg'])
+                self.notifier.notify("⚙️" + _("Settings"), _("Configuration save failed:") + update_state[0].json['msg'])
                 return update_state
-            self.notifier.notify(_("⚙️Settings"), _("Configuration saved"))
+            self.notifier.notify("⚙️" + _("Settings"), _("Configuration saved"))
             return Result.success(data=config_dict)

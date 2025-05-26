@@ -58,7 +58,7 @@ msgid "Error"
 msgstr "错误"
 
 msgid "This interface only allows local access"
-msgstr "此界面仅允许本地访问"
+msgstr "此页面仅允许本地访问"
 
 msgid "Key error"
 msgstr "密钥错误"
@@ -67,7 +67,7 @@ msgid "Version mismatch"
 msgstr "版本不匹配"
 
 msgid "Windows version: %(win_version)s\nShortcut version: %(shortcut_version)s"
-msgstr "Windows 版本：%(win_version)s\n快捷方式版本：%(shortcut_version)s"
+msgstr "Windows 版本：%(win_version)s\n快捷指令版本：%(shortcut_version)s"
 
 msgid "Test"
 msgstr "测试"
@@ -85,13 +85,13 @@ msgid "Error: File path parsing error"
 msgstr "错误：文件路径解析错误"
 
 msgid "Sending file:"
-msgstr "正在发送文件："
+msgstr "发送文件："
 
 msgid "Sending clipboard text:"
-msgstr "正在发送剪贴板文本："
+msgstr "发送剪贴板文本："
 
 msgid "Sending clipboard image"
-msgstr "正在发送剪贴板图片"
+msgstr "发送剪贴板图片"
 
 msgid "Windows clipboard is empty"
 msgstr "Windows 剪贴板为空"
@@ -133,7 +133,7 @@ msgid "Show Icon"
 msgstr "显示图标"
 
 msgid "Requires restart to take effect, enable in _internal/config.ini if disabled"
-msgstr "需要重启才能生效，如果禁用请在 _internal/config.ini 中启用"
+msgstr "重启软件后生效，隐藏后请在 _internal/config.ini 中启用"
 
 msgid "Save"
 msgstr "保存"
@@ -142,7 +142,7 @@ msgid "Error getting configuration"
 msgstr "获取配置错误"
 
 msgid "Please fill in all settings"
-msgstr "请填写所有设置"
+msgstr "请填写所有设置项"
 
 msgid "Network response error"
 msgstr "网络响应错误"
