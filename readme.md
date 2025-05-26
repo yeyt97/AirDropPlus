@@ -15,20 +15,19 @@ A file transfer and clipboard synchronization tool between Windows and iOS devic
 # Requirements
 
 ```
-python==3.10.6
 flask==3.0.0
-psutil==5.9.6
-pyinstaller==6.2.0
-windows_toasts==1.1.0
+flask-babel==4.0.0
 pillow==10.1.0
-pyperclip~=1.8.2
 pystray==0.19.5
+pyinstaller==6.2.0
+windows-toasts==1.1.0
+pyperclip==1.8.2
 ```
 
 # Packaging
 
 ```bash
-pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus.py
+python build.py
 ```
 
 # Usage
@@ -43,8 +42,7 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
 2. Set up AirdropPlus
-    - Modify the configuration file 'config.ini' to set the file save path and key.
-   - The packaged configuration file is located at '_internal/config.ini'.
+    - Right click on the tray icon and open the web menu with settings.
 3. Start AirDropPlus.exe
    
     Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
@@ -59,8 +57,8 @@ pyinstaller --add-data 'config;config' --add-data 'static;static' -w AirDropPlus
    </div>
 5. Set up the shortcut:
    - host：'hostname.local' (or the host IP address instead)
-   - port：The same port number set in 'config.ini'
-   - key：The same key set in 'config.ini'
+   - port：The same port number set in 'web menu'
+   - key：The same key set in 'web menu'
    - simplify：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">

@@ -6,6 +6,7 @@ import subprocess
 
 import utils
 import clipboard
+from flask_babel import gettext as _
 
 
 class Notifier:
@@ -36,7 +37,7 @@ class Notifier:
         :return: None
         """
         if self.use_basic_notifier:
-            self.notify('收到文件:', filename)
+            self.notify(_('Received file:'), filename)
             return
 
         def button_cb(args: ToastActivatedEventArgs):
@@ -49,16 +50,16 @@ class Notifier:
             elif action == 'copy':
                 success, e = clipboard.set_file(path)
                 if not success:
-                    self.notify("⚠️剪贴板设置错误", e)
+                    self.notify("⚠️" + _("Clipboard setting error"), e)
 
         self.clear_toasts()
-        toast = Toast([f"收到文件: {filename}"])
+        toast = Toast([f"{_('Received file:')} {filename}"])
         file_path = os.path.join(folder, new_filename)
         if utils.is_image_file(file_path):
             toast.AddImage(ToastDisplayImage.fromPath(file_path))
-        toast.AddAction(ToastButton("📁文件夹", arguments='select'))
-        toast.AddAction(ToastButton("🖼︎打开", arguments='open'))
-        toast.AddAction(ToastButton("✂复制", arguments='copy'))
+        toast.AddAction(ToastButton("📁" + _("Folder"), arguments='select'))
+        toast.AddAction(ToastButton("🖼︎" + _("Open"), arguments='open'))
+        toast.AddAction(ToastButton("✂" + _("Copy"), arguments='copy'))
         toast.on_activated = button_cb
         toast.on_dismissed = lambda args: self.toaster.clear_toasts()
         toast.expiration_time = datetime.now()

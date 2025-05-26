@@ -1,0 +1,172 @@
+# AirDropPlus translations
+msgid ""
+msgstr ""
+"Project-Id-Version: AirDropPlus\n"
+"POT-Creation-Date: 2024-03-24 12:00\n"
+"PO-Revision-Date: 2024-03-24 12:00\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid "Configuration file"
+msgstr "Файл конфигурации"
+
+msgid "Web configuration"
+msgstr "Веб-конфигурация"
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid "AirDrop Plus"
+msgstr "AirDrop Plus"
+
+msgid "Edit complete, please save and restart AirDrop Plus"
+msgstr "Редактирование завершено, сохраните и перезапустите AirDrop Plus"
+
+msgid "Opened localhost in default browser"
+msgstr "Открыт localhost в браузере по умолчанию"
+
+msgid "Failed to open browser:"
+msgstr "Не удалось открыть браузер:"
+
+msgid "Started"
+msgstr "Запущено"
+
+msgid "Start failed"
+msgstr "Ошибка запуска"
+
+msgid "Directory \"%(path)s\" does not exist, please check"
+msgstr "Директория \"%(path)s\" не существует, проверьте"
+
+msgid "Port number must be between 1024 and 65535"
+msgstr "Номер порта должен быть между 1024 и 65535"
+
+msgid "Port %(port)s is already in use, please change"
+msgstr "Порт %(port)s уже используется, выберите другой"
+
+msgid "Error message: %(error)s"
+msgstr "Сообщение об ошибке: %(error)s"
+
+msgid "Port: %(port)s\nSave path: %(path)s"
+msgstr "Порт: %(port)s\nПуть сохранения: %(path)s"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "This interface only allows local access"
+msgstr "Этот интерфейс доступен только локально"
+
+msgid "Key error"
+msgstr "Ошибка ключа"
+
+msgid "Version mismatch"
+msgstr "Несоответствие версий"
+
+msgid "Windows version: %(win_version)s\nShortcut version: %(shortcut_version)s"
+msgstr "Версия Windows: %(win_version)s\nВерсия Shortcut: %(shortcut_version)s"
+
+msgid "Test"
+msgstr "Тест"
+
+msgid "Hello World!"
+msgstr "Привет, мир!"
+
+msgid "File does not exist"
+msgstr "Файл не существует"
+
+msgid "Send successful"
+msgstr "Отправка успешна"
+
+msgid "Error: File path parsing error"
+msgstr "Ошибка: Ошибка разбора пути к файлу"
+
+msgid "Sending file:"
+msgstr "Отправка файла:"
+
+msgid "Sending clipboard text:"
+msgstr "Отправка текста из буфера обмена:"
+
+msgid "Sending clipboard image"
+msgstr "Отправка изображения из буфера обмена"
+
+msgid "Windows clipboard is empty"
+msgstr "Буфер обмена Windows пуст"
+
+msgid "iPhone clipboard is empty"
+msgstr "Буфер обмена iPhone пуст"
+
+msgid "Error setting clipboard:"
+msgstr "Ошибка установки буфера обмена:"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Configuration saved"
+msgstr "Конфигурация сохранена"
+
+msgid "Configuration save failed:"
+msgstr "Ошибка сохранения конфигурации:"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Key"
+msgstr "Ключ"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "Requires restart to take effect"
+msgstr "Требуется перезапуск для применения изменений"
+
+msgid "Save Path"
+msgstr "Путь сохранения"
+
+msgid "Basic Notification Style"
+msgstr "Базовый стиль уведомлений"
+
+msgid "Show Icon"
+msgstr "Показывать иконку"
+
+msgid "Requires restart to take effect, enable in _internal/config.ini if disabled"
+msgstr "Требуется перезапуск для применения изменений, включите в _internal/config.ini, если отключено"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Error getting configuration"
+msgstr "Ошибка получения конфигурации"
+
+msgid "Please fill in all settings"
+msgstr "Пожалуйста, заполните все настройки"
+
+msgid "Network response error"
+msgstr "Ошибка сетевого ответа"
+
+msgid "Settings saved!"
+msgstr "Настройки сохранены!"
+
+msgid "Failed to save settings"
+msgstr "Не удалось сохранить настройки"
+
+msgid "Error saving settings"
+msgstr "Ошибка сохранения настроек"
+
+msgid "Received file:"
+msgstr "Получен файл:"
+
+msgid "Folder"
+msgstr "Папка"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Clipboard setting error"
+msgstr "Ошибка настройки буфера обмена" 

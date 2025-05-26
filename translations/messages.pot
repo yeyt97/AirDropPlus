@@ -1,0 +1,233 @@
+# AirDropPlus translations
+msgid ""
+msgstr ""
+"Project-Id-Version: AirDropPlus\n"
+"POT-Creation-Date: 2024-03-24 12:00\n"
+"PO-Revision-Date: 2024-03-24 12:00\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: AirDropPlus.py
+msgid "Configuration file"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Web configuration"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Exit"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "AirDrop Plus"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Edit complete, please save and restart AirDrop Plus"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Opened localhost in default browser"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Failed to open browser:"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Started"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Start failed"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Directory \"%(path)s\" does not exist, please check configuration file"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Port %(port)s is already in use"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Error message: %(error)s"
+msgstr ""
+
+#: AirDropPlus.py
+msgid "Port: %(port)s\nSave path: %(path)s"
+msgstr ""
+
+#: server.py
+msgid "Error"
+msgstr ""
+
+#: server.py
+msgid "This interface only allows local access"
+msgstr ""
+
+#: server.py
+msgid "Key error"
+msgstr ""
+
+#: server.py
+msgid "Version mismatch"
+msgstr ""
+
+#: server.py
+msgid "Windows version: %(win_version)s\nShortcut version: %(shortcut_version)s"
+msgstr ""
+
+#: server.py
+msgid "Test"
+msgstr ""
+
+#: server.py
+msgid "Hello World!"
+msgstr ""
+
+#: server.py
+msgid "File does not exist"
+msgstr ""
+
+#: server.py
+msgid "Send successful"
+msgstr ""
+
+#: server.py
+msgid "Error: File path parsing error"
+msgstr ""
+
+#: server.py
+msgid "Sending file:"
+msgstr ""
+
+#: server.py
+msgid "Sending clipboard text:"
+msgstr ""
+
+#: server.py
+msgid "Sending clipboard image"
+msgstr ""
+
+#: server.py
+msgid "Windows clipboard is empty"
+msgstr ""
+
+#: server.py
+msgid "iPhone clipboard is empty"
+msgstr ""
+
+#: server.py
+msgid "Error setting clipboard:"
+msgstr ""
+
+#: server.py
+msgid "Settings"
+msgstr ""
+
+#: server.py
+msgid "Configuration saved"
+msgstr ""
+
+#: server.py
+msgid "Configuration save failed:"
+msgstr ""
+
+#: server.py
+msgid "Language"
+msgstr ""
+
+#: server.py
+msgid "Key"
+msgstr ""
+
+#: server.py
+msgid "Port"
+msgstr ""
+
+#: server.py
+msgid "Requires restart to take effect"
+msgstr ""
+
+#: server.py
+msgid "Save Path"
+msgstr ""
+
+#: server.py
+msgid "Basic Notification Style"
+msgstr ""
+
+#: server.py
+msgid "Show Icon"
+msgstr ""
+
+#: server.py
+msgid "Requires restart to take effect, enable in _internal/config.ini if disabled"
+msgstr ""
+
+#: server.py
+msgid "Save"
+msgstr ""
+
+#: server.py
+msgid "Error getting configuration"
+msgstr ""
+
+#: server.py
+msgid "Please fill in all settings"
+msgstr ""
+
+#: server.py
+msgid "Network response error"
+msgstr ""
+
+#: server.py
+msgid "Settings saved!"
+msgstr ""
+
+#: server.py
+msgid "Failed to save settings"
+msgstr ""
+
+#: server.py
+msgid "Error saving settings"
+msgstr ""
+
+#: config.py
+msgid "Directory \"%(path)s\" does not exist, please check"
+msgstr ""
+
+#: config.py
+msgid "Port number must be between 1024 and 65535"
+msgstr ""
+
+#: config.py
+msgid "Port %(port)s is already in use, please change"
+msgstr ""
+
+#: notifier.py
+msgid "Received file:"
+msgstr ""
+
+#: notifier.py
+msgid "Folder"
+msgstr ""
+
+#: notifier.py
+msgid "Open"
+msgstr ""
+
+#: notifier.py
+msgid "Copy"
+msgstr ""
+
+#: notifier.py
+msgid "Clipboard setting error"
+msgstr "" 

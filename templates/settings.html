@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="{{ config.language }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>设置表单</title>
+    <title>{{ _('Settings') }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,12 +13,12 @@
             align-items: flex-start;
         }
         .container {
-            width: 80%; /* 可以根据需要调整宽度 */
-            max-width: 800px; /* 限制最大宽度 */
+            width: 80%;
+            max-width: 800px;
             padding: 20px;
-            border: 1px solid #ccc; /* 添加边框 */
-            border-radius: 5px; /* 圆角边框 */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .form-group {
             margin-bottom: 15px;
@@ -27,7 +27,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        input[type="text"], input[type="number"] {
+        input[type="text"], input[type="number"], select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -76,7 +76,6 @@
             -ms-transform: translateX(26px);
             transform: translateX(26px);
         }
-        /* Rounded sliders */
         .slider.round {
             border-radius: 34px;
         }
@@ -97,40 +96,49 @@
 </head>
 <body>
     <div class="container">
-        <h1>设置</h1>
+        <h1>{{ _('Settings') }}</h1>
         <form id="settingsForm">
             <div class="form-group">
-                <label for="key">密钥:</label>
+                <label for="language">{{ _('Language') }}:</label>
+                <select id="language" name="language">
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                </select>
+                <small style="color: rgb(248, 108, 108);">{{ _('Requires restart to take effect') }}</small>
+            </div>
+            <div class="form-group">
+                <label for="key">{{ _('Key') }}:</label>
                 <input type="text" id="key" name="key">
             </div>
             <div class="form-group">
-                <label for="port">端口号:</label>
+                <label for="port">{{ _('Port') }}:</label>
                 <input type="number" id="port" name="port" min="1024" max="65535">
-                <small style="color: rgb(248, 108, 108);">重启软件后生效</small>
+                <small style="color: rgb(248, 108, 108);">{{ _('Requires restart to take effect') }}</small>
             </div>
             <div class="form-group">
-                <label for="key">保存路径:</label>
+                <label for="savePath">{{ _('Save Path') }}:</label>
                 <input type="text" id="savePath" name="savePath">
             </div>
             <div class="form-group">
-                <label>传统通知样式:</label>
+                <label>{{ _('Basic Notification Style') }}:</label>
                 <label class="switch">
                     <input type="checkbox" id="basicNotifier" name="basicNotifier">
                     <span class="slider round"></span>
                 </label>
                 <br/>
-                <small style="color: rgb(248, 108, 108);">重启软件后生效</small>
+                <small style="color: rgb(248, 108, 108);">{{ _('Requires restart to take effect') }}</small>
             </div>
             <div class="form-group">
-                <label>显示图标:</label>
+                <label>{{ _('Show Icon') }}:</label>
                 <label class="switch">
                     <input type="checkbox" id="showIcon" name="showIcon">
                     <span class="slider round"></span>
                 </label>
                 <br/>
-                <small style="color: rgb(248, 108, 108);">重启软件后生效，关闭后在'_internal/config.ini'中开启</small>
+                <small style="color: rgb(248, 108, 108);">{{ _('Requires restart to take effect, enable in _internal/config.ini if disabled') }}</small>
             </div>
-            <button type="button" onclick="saveSettings()">保存</button>
+            <button type="button" onclick="saveSettings()">{{ _('Save') }}</button>
         </form>
 
         <script>
@@ -147,11 +155,12 @@
                             document.getElementById('savePath').value = config.save_path;
                             document.getElementById('basicNotifier').checked = config.basic_notifier;
                             document.getElementById('showIcon').checked = config.show_icon;
+                            document.getElementById('language').value = config.language || 'en';
                         }
                     })
                   .catch(error => {
-                        console.error('获取配置信息出错:', error);
-                        alert('获取配置信息出错');
+                        console.error('{{ _("Error getting configuration") }}:', error);
+                        alert('{{ _("Error getting configuration") }}');
                     });
             }
 
@@ -161,9 +170,10 @@
                 const savePath = document.getElementById('savePath').value;
                 const basicNotifier = document.getElementById('basicNotifier').checked;
                 const showIcon = document.getElementById('showIcon').checked;
+                const language = document.getElementById('language').value;
                 
                 if (!key || !port || !savePath) {
-                    alert('请填写完整的设置');
+                    alert('{{ _("Please fill in all settings") }}');
                     return;
                 }
 
@@ -172,7 +182,8 @@
                     port: port,
                     save_path: savePath,
                     basic_notifier: basicNotifier,
-                    show_icon: showIcon
+                    show_icon: showIcon,
+                    language: language
                 };
 
                 fetch('/settings/configs', {
@@ -184,20 +195,20 @@
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('网络响应异常');
+                        throw new Error('{{ _("Network response error") }}');
                     }
                     return response.json();
                 })
                 .then(data => {
                     if (data.success) {
-                        alert('设置已保存!');
+                        alert('{{ _("Settings saved!") }}');
                     } else {
-                        alert('保存设置失败: ' + data.msg);
+                        console.log('{{ _("Failed to save settings") }}: ' + data.msg);
                     }
                 })
                 .catch(error => {
-                    console.error('保存设置出错');
-                    alert('保存设置出错');
+                    console.error('{{ _("Error saving settings") }}');
+                    console.log('{{ _("Error saving settings") }}');
                 });
                 location.reload();
             }
