@@ -41,17 +41,15 @@ python build.py
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. 设置 AirdropPlus
-    - 自定义 'config.ini' 文件 文件保存目录和 key。
-    - 打包版的配置文件在 '_internal/config.ini' 目录下
-3. 启动 AirDropPlus.exe
-   
+2. 启动 AirDropPlus.exe
+
     启动 'AirDropPlus.exe'，弹出如下弹框请点击允许。
     <div style="text-align:center;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
+3. 设置 AirdropPlus
+    - 右键托盘图标，打开网页设置进行配置
 4. 在 iPhone 上获取快捷指令
-
    https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
    <div style="text-align:center;">
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
@@ -67,7 +65,10 @@ python build.py
 6. 设置快捷指令触发方式:
    1. 在 '设置-辅助功能-触控-轻点背面' 中设置双击手机背面触发快捷指令。
    2. iPhone 15 Pro 系列可以通过侧边按钮触发。
-7. 功能测试:
+7. 解除快捷指令发送文件数量限制（不进行该项设置会导致发送多张图片时报错）
+
+   iPhone-设置-App-快捷指令-高级-允许共享大量数据
+8. 功能测试:
     - **发送文件**:
 
       在共享菜单中点击 'AirDrop Plus'。

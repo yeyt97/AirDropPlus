@@ -41,14 +41,14 @@ python build.py
     <div style="text-align:center;">
         <img src="pic/windows_device_name.png" alt="Image" style="width: 35%;">
     </div>
-2. Set up AirdropPlus
-    - Right click on the tray icon and open the web menu with settings.
-3. Start AirDropPlus.exe
-   
+2. Start AirDropPlus.exe
+
     Start 'AirDropPlus.exe', and when prompted with the following pop-up, please click to allow.
     <div style="text-align:center;">
       <img src="pic/network.png" alt="Image" style="width: 35%;">
     </div>
+3. Set up AirdropPlus
+    - Right click on the tray icon and open the web configration with settings.
 4. Get the shortcut on your iPhone.
 
    https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
@@ -66,6 +66,9 @@ python build.py
 6. Set the trigger method of the shortcut:
    1. Set it up in 'Settings-Accessibility-Touch-BackTap' to trigger with a double-tap on the back of the iPhone.
    2. The iPhone 15 Pro series can set it to trigger with the side button.
+7.Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
+
+  iPhone - Settings - App - Shortcuts - Advanced - Allow Sharing Large Amounts of Data
 7. Functionality Testing:
     - **Send files**:
 
