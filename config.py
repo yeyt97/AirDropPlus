@@ -22,7 +22,7 @@ class Config:
         
         # Add language configuration
         if not self.config.has_option('config', 'language'):
-            self.config.set('config', 'language', 'en')
+            self.config.set('config', 'config', 'en')
         self.language = self.config.get('config', 'language')
 
     def update(self, data):
@@ -33,7 +33,7 @@ class Config:
         if port_int < 1024 or port_int > 65535:
             return Result.success(msg=_('Port number must be between 1024 and 65535'))
 
-        if port_int != self.port and is_port_in_use(port_int):
+        if port_int != int(self.port) and is_port_in_use(port_int):
             return Result.success(msg=_('Port %(port)s is already in use, please change', port=data['port']))
 
         self.config.set('config', 'key', data['key'])
@@ -41,16 +41,13 @@ class Config:
         self.config.set('config', 'port', str(data['port']))
         self.config.set('config', 'basic_notifier', str(int(data['basic_notifier'])))
         self.config.set('config', 'show_icon', str(int(data['show_icon'])))
-        
-        # Update language if provided
-        if 'language' in data:
-            self.config.set('config', 'language', data['language'])
-            self.language = data['language']
+        self.config.set('config', 'language', data['language'])
 
         self.key = data['key']
         self.save_path = data['save_path']
         self.port = data['port']
         self.basic_notifier = data['basic_notifier']
         self.show_icon = data['show_icon']
+        self.language = data['language']
 
         self.config.write(open(self.config_path, 'w', encoding='utf-8'))
