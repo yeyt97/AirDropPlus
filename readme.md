@@ -53,7 +53,7 @@ python build.py
 
    https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
       <div style="text-align:center;">
-       <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
+       <img src="pic/shortcut_QRcode.png" alt="Image" style="width: 35%;">
    </div>
 5. Set up the shortcut:
    - host：'hostname.local' (or the host IP address instead)
@@ -66,16 +66,16 @@ python build.py
 6. Set the trigger method of the shortcut:
    1. Set it up in 'Settings-Accessibility-Touch-BackTap' to trigger with a double-tap on the back of the iPhone.
    2. The iPhone 15 Pro series can set it to trigger with the side button.
-7.Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
-
-  iPhone - Settings - App - Shortcuts - Advanced - Allow Sharing Large Amounts of Data
-7. Functionality Testing:
+7. Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
+   1. iPhone - Settings - App - Shortcuts - Advanced - Allow Sharing Large Amounts of Data
+8. Functionality Testing:
     - **Send files**:
 
       Tap the 'AirDrop Plus' shortcut from the file sharing menu.
-      <div style="text-align:center;">
-        <img src="pic/send_file.png" alt="Image" style="width: 35%;">
-      </div>
+      
+        <div style="text-align:center;">
+            <img src="pic/send_file.png" alt="Image" style="width: 35%;">
+        </div>
    - **Send texts**:
      1. Copy the text which you want to send.
      2. Trigger the shortcut, then tap the 'Send' option.
