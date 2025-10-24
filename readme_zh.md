@@ -84,6 +84,10 @@ python build.py
       <div style="text-align:center;">
         <img src="pic/send_file.png" alt="Image" style="width: 35%;">
       </div>
+      PC端在收到文件后会弹出通知。
+      <div style="text-align:center;">
+        <img src="pic/send_file_pc.png" alt="Image" style="width: 35%;">
+      </div>
    - **发送文本**:
      1. 复制你想发送的文本
      2. 触发快捷指令，点击 'Send' 选项。

@@ -85,6 +85,10 @@ python build.py
       <div style="text-align:center;">
         <img src="pic/send_file.png" alt="Image" style="width: 35%;">
       </div>
+      PC will receive the file and show a notification.
+      <div style="text-align:center;">
+        <img src="pic/send_file_pc.png" alt="Image" style="width: 35%;">
+      </div>
    - **Send texts**:
      1. Copy the text which you want to send.
      2. Trigger the shortcut, then tap the 'Send' option.
