@@ -51,27 +51,36 @@ python build.py
     - Right click on the tray icon and open the web configration with settings.
 4. Get the shortcut on your iPhone.
 
-   https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
+   https://www.icloud.com/shortcuts/a8ed29739f194a04aa9b02e93ff8f896
       <div style="text-align:center;">
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
    </div>
 5. Set up the shortcut:
-   - host：'hostname.local' (or the host IP address instead)
+   - host：'hostname.local'
    - port：The same port as that in the PC-side settings
    - key：The same key as that in the PC-side settings
-   - simplify：Enabling this will disable the function to send the iOS clipboard
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
+   </div>
+   If your PC does not support access via 'hostname.local', you can use the PC's IP address instead. Fill in the combinations of WiFi names and PC IP addresses for all your scenarios in the list below.
+   <div style="text-align:center;">
+       <img src="pic/shortcut_conf_2.png" alt="Image" style="width: 35%;">
    </div>
 6. Set the trigger method of the shortcut:
    1. Set it up in 'Settings-Accessibility-Touch-BackTap' to trigger with a double-tap on the back of the iPhone.
    2. The iPhone 15 Pro series can set it to trigger with the side button.
-7.Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
-
+   3. Newer versions of iOS can add 'AirDrop Plus' shortcuts to the Control Center.
+7. Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
   iPhone - Settings - App - Shortcuts - Advanced - Allow Sharing Large Amounts of Data
-7. Functionality Testing:
+8. Functionality Testing:
     - **Send files**:
-
+      Add the 'AirDrop Plus' shortcut to the file sharing menu.
+      <div style="text-align:center;">
+        <img src="pic/edit_actions.png" alt="Image" style="width: 35%;">
+      </div>
+      <div style="text-align:center;">
+        <img src="pic/edit_actions_2.png" alt="Image" style="width: 35%;">
+      </div>
       Tap the 'AirDrop Plus' shortcut from the file sharing menu.
       <div style="text-align:center;">
         <img src="pic/send_file.png" alt="Image" style="width: 35%;">
@@ -93,7 +102,7 @@ python build.py
 ### 1. Shortcut Timeout:
 1. Check if the local area network (LAN) environment is unobstructed. In campus network environments, communication with LAN devices may be prohibited.
 2. Check if the port in the PC-side settings is the same as that set in the shortcut commands.
-3. Ensure that the hostname set in the shortcut is consistent with **the PC's hostname** (the hostname should not be in Chinese). You can also try changing **hostname.local** to **IP address**.
+3. Ensure that the hostname set in the shortcut is consistent with **the PC's hostname** (the hostname should not be in Chinese and should not contain '-'). You can also try changing **hostname.local** to **IP address**.
 4. Check if the PC's firewall is blocking the port set in the **config.ini** file. Remove all entries related to AirDropPlus and restart AirDropPlus. After the restart, please allow the pop-up for network requests.
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
@@ -104,13 +113,6 @@ python build.py
 1. It's possible that the PC's system version is too old to support interactive notifications. Try changing to basic notifications in the **config.ini** file.
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
-    </div>
-
-### 3. The iPhone sent a Clipboard, but the PC received a file
-1. Up to now, the input type obtained via the shortcut depends on the language of the iOS device. I have only considered input types in English, Simplified Chinese, and Traditional Chinese. If your iOS device is set to another language, errors may occur.
-2. You can try adding the type name of 'Text' in your iOS device's language into the brackets, separated by '|'.
-    <div style="text-align:center;">
-      <img src="pic/shortcut_type.png" alt="Image" style="width: 50%;">
     </div>
 
 # API

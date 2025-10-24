@@ -50,27 +50,36 @@ python build.py
 3. 设置 AirdropPlus
     - 右键托盘图标，打开网页设置进行配置
 4. 在 iPhone 上获取快捷指令
-   https://www.icloud.com/shortcuts/d8ba54ce9e674becaf951a076ac1d967
+   https://www.icloud.com/shortcuts/a8ed29739f194a04aa9b02e93ff8f896
    <div style="text-align:center;">
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
    </div>
 5. 设置快捷指令:
-   - host：'hostname.local' (或者 PC 的 IP 地址)
+   - host：'hostname.local'
    - port：和PC端设置中一样的 port
    - key：和PC端设置中一样的 key
-   - simplify：为 True 时禁用发送 iPhone 剪贴板的功能
    <div style="text-align:center;">
        <img src="pic/shortcut_conf.png" alt="Image" style="width: 35%;">
+   </div>
+   如果你的PC不支持 'hostname.local'访问，可以使用 PC 的 IP 地址替代。在下面这个列表中填写你所有场景下的wifi名称和PC的ip组合。
+   <div style="text-align:center;">
+       <img src="pic/shortcut_conf_2.png" alt="Image" style="width: 35%;">
    </div>
 6. 设置快捷指令触发方式:
    1. 在 '设置-辅助功能-触控-轻点背面' 中设置双击手机背面触发快捷指令。
    2. iPhone 15 Pro 系列可以通过侧边按钮触发。
+   3. 新版 iOS 可以在控制中心设置中添加 'AirDrop Plus' 快捷指令。
 7. 解除快捷指令发送文件数量限制（不进行该项设置会导致发送多张图片时报错）
-
    iPhone-设置-App-快捷指令-高级-允许共享大量数据
 8. 功能测试:
     - **发送文件**:
-
+      将 AriDrop Plus 快捷指令添加到共享菜单的个人收藏中。
+      <div style="text-align:center;">
+        <img src="pic/edit_actions.png" alt="Image" style="width: 35%;">
+      </div>
+      <div style="text-align:center;">
+        <img src="pic/edit_actions_2.png" alt="Image" style="width: 35%;">
+      </div>
       在共享菜单中点击 'AirDrop Plus'。
       <div style="text-align:center;">
         <img src="pic/send_file.png" alt="Image" style="width: 35%;">
@@ -92,7 +101,7 @@ python build.py
 ### 1. 快捷指令超时:
 1. 检查局域网是否通畅。校园网的局域网连接可能会被禁止。
 2. 检查PC端设置中的 port 是否和快捷指令中设置的相同。
-3. 确保快捷指令里设置的 **设备名.local** 正确 (设备名不能是中文). 可以尝试把 **设备名.local** 换成 **IP address** 试试。
+3. 确保快捷指令里设置的 **设备名.local** 正确 (设备名不能是中文，也最好不要加-). 可以尝试把 **设备名.local** 换成 **IP address** 试试。
 4. 检查 PC 端防火墙是否有禁用 **config.ini** 中设置的端口号。移除所有有关AirDropPlus的项目，再重启 AirDropPlus，在弹框中允许网络访问。
     <div style="text-align:center;">
       <img src="pic/firewall.png" alt="Image" style="width: 50%;">
@@ -103,13 +112,6 @@ python build.py
 1. 可能是 Windows 版本太低，不支持交互式通知。尝试在PC端设置中开启基本通知样式。
     <div style="text-align:center;">
       <img src="pic/basic_notify.png" alt="Image" style="width: 40%;">
-    </div>
-
-### 3. iPhone 发送了剪贴板，但 PC 收到一个文件
-1. 到目前为止，快捷指令获取的输入类型是依赖 iOS 系统语言的，我只考虑到了英语、简体中文、繁体中文。如果你的系统是其他语言的，可能会遇到问题。
-2. 你可以把你系统语言中的文本类型的名称加入到括号里，使用 '|' 隔开。
-    <div style="text-align:center;">
-      <img src="pic/shortcut_type.png" alt="Image" style="width: 50%;">
     </div>
 
 # API
