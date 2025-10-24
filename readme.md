@@ -66,10 +66,16 @@ python build.py
    <div style="text-align:center;">
        <img src="pic/shortcut_conf_2.png" alt="Image" style="width: 35%;">
    </div>
-6. Set the trigger method of the shortcut:
+6. Set the trigger method of the shortcut (choose one of the three methods):
    1. Set it up in 'Settings-Accessibility-Touch-BackTap' to trigger with a double-tap on the back of the iPhone.
    2. The iPhone 15 Pro series can set it to trigger with the side button.
+      <div style="text-align:center;">
+        <img src="pic/action_button.png" alt="Image" style="width: 35%;">
+      </div>
    3. Newer versions of iOS can add 'AirDrop Plus' shortcuts to the Control Center.
+      <div style="text-align:center;">
+        <img src="pic/control_centor.png" alt="Image" style="width: 35%;">
+      </div>
 7. Remove the limit on the number of files sent via Shortcuts (Not performing this setting will cause an error when sending multiple images)
   iPhone - Settings - App - Shortcuts - Advanced - Allow Sharing Large Amounts of Data
 8. Functionality Testing:

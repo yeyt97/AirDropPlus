@@ -65,10 +65,16 @@ python build.py
    <div style="text-align:center;">
        <img src="pic/shortcut_conf_2.png" alt="Image" style="width: 35%;">
    </div>
-6. 设置快捷指令触发方式:
+6. 设置快捷指令触发方式(三选一):
    1. 在 '设置-辅助功能-触控-轻点背面' 中设置双击手机背面触发快捷指令。
    2. iPhone 15 Pro 系列可以通过侧边按钮触发。
+      <div style="text-align:center;">
+        <img src="pic/action_button.png" alt="Image" style="width: 35%;">
+      </div>
    3. 新版 iOS 可以在控制中心设置中添加 'AirDrop Plus' 快捷指令。
+      <div style="text-align:center;">
+        <img src="pic/control_centor.png" alt="Image" style="width: 35%;">
+      </div>
 7. 解除快捷指令发送文件数量限制（不进行该项设置会导致发送多张图片时报错）
    iPhone-设置-App-快捷指令-高级-允许共享大量数据
 8. 功能测试:
