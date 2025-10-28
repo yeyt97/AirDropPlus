@@ -51,7 +51,7 @@ python build.py
     - Right click on the tray icon and open the web configration with settings.
 4. Get the shortcut on your iPhone.
 
-   https://www.icloud.com/shortcuts/a8ed29739f194a04aa9b02e93ff8f896
+   https://www.icloud.com/shortcuts/71bfd351276c4d5bb12e538391bc7eb4
       <div style="text-align:center;">
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
    </div>
