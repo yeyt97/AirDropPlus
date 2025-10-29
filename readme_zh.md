@@ -50,7 +50,8 @@ python build.py
 3. 设置 AirdropPlus
     - 右键托盘图标，打开网页设置进行配置
 4. 在 iPhone 上获取快捷指令
-   https://www.icloud.com/shortcuts/71bfd351276c4d5bb12e538391bc7eb4
+   version: 1.5.4
+   https://www.icloud.com/shortcuts/c499c9a3d9b04e189cce38d9560b3e2e
    <div style="text-align:center;">
        <img src="pic/shortcut_QRCode.png" alt="Image" style="width: 35%;">
    </div>
